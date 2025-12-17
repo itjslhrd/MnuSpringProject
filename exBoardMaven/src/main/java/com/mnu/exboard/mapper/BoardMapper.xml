@@ -17,4 +17,9 @@
 					values(#{name},#{subject},${contents},#{pass})
 	</insert>
 	
+	<!-- 뷰 -->
+	<select id="boardView">
+		select * from tbl_board where idx=#{idx}
+	</select>
+	
 </mapper>

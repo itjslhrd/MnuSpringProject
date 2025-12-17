@@ -46,4 +46,13 @@ public class BoardController {
 		return "/Board/board_write_pro";
 	}
 	
+	//뷰
+	@GetMapping("board_view")
+	public String boardView(int idx, Model model) {
+		log.info("Controller Call : board_view");
+		
+		model.addAttribute("board", boardService.boardView(idx));
+		
+		return "/Board/board_view";
+	}
 }

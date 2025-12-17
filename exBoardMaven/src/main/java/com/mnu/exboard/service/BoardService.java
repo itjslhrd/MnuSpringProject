@@ -29,5 +29,12 @@ public class BoardService {
 		return boardMapper.boardWrite(dto);
 	}
 
+	//뷰
+	public BoardDTO boardView(int idx) {
+		BoardDTO board = boardMapper.boardView(idx);
+		board.setContents(board.getContents().replace("\n", "<br>"));
+		//return boardMapper.boardView(idx);
+		return board;
+	}
 	
 }
