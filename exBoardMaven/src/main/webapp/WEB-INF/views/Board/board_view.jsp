@@ -46,15 +46,13 @@
       <p align="center">
       <font size="2">
        <!-- 새글쓰기 -->
-       <a href="">
-       <img src="/img/write.jpg" border="0"></a>&nbsp;&nbsp;
+       <button onClick="board_write()">새글</button>&nbsp;&nbsp;
       <!-- 수정하기 -->
-       <a href="">
-       <img src="/img/edit.gif" border="0"></a>&nbsp;&nbsp;
+       <button onClick="location.href='/Board/board_modify?idx=${board.idx}'">수정</button>&nbsp;&nbsp;
          <!-- 삭제하기 -->
-       <a href=""><img src="/img/del.gif" border="0"></a>&nbsp;&nbsp;
+       <button onClick="board_delete()">삭제</button>&nbsp;&nbsp;
        <!-- 목록보기 -->
-       <a href=""><img src="/img/list-2.gif" border="0"></a>&nbsp;&nbsp;
+       <button onClick="location.href='/Board/board_list'">목록</button>&nbsp;&nbsp;
       </font>
 
 	<!--  다음에 추가할 부분 -->
@@ -65,3 +63,13 @@
   </body>
   </html>
 
+<script>
+	function board_write(){
+		location.href="/Board/board_write";
+	}
+	function board_delete(){
+		url="/Board/board_delete?idx=${board.idx}";
+		window.open(url,"board_delete","width=300, height=250");
+	}
+	
+</script>

@@ -26,7 +26,7 @@
         <img src="/img/bullet-01.gif"> <b>자 유 게 시 판</b></font></td></tr>
       <tr>
         <td colspan="5" align="right" valign="middle" height="20">
-		<font size="2" face="고딕">전체 : <b>${totcount}</b>건 - 1/ 2 Pages</font></td></tr>
+		<font size="2" face="고딕">전체 : <b>${totcount}</b>건 - ${page}/ ${totpage} Pages</font></td></tr>
  	   <tr bgcolor="e3e9ff">
  	      <td width="10%" align="center" height="20"><font face="돋움" size="2">번 호</font></td>
  	      <td width="50%" align="center" height="20"><font face="돋움" size="2">제 목</font></td>
@@ -37,7 +37,7 @@
 <c:forEach var="board" items="${bList}">
 		<tr onMouseOver="style.backgroundColor='#D1EEEE'" onMouseOut="style.backgroundColor=''">
 			<td align="center" height="25">
-			<font face="돋움" size="2" color="#000000">${board.idx}</font></td>
+			<font face="돋움" size="2" color="#000000">${listcount}</font></td>
 			<td align="left" height="20">&nbsp;
 				<font face="돋움" size="2" color="#000000">
 				<a class="list" href="board_view?idx=${board.idx}">${board.subject}</a></td>
@@ -46,6 +46,7 @@
 				<td align="center" height="20"><font face="돋움" size="2">${fn:substring(board.regdate,0,10)}</font></td>
 				<td align="center" height="20"><font face="돋움" size="2">${board.readcnt}</font></td>
 		</tr>
+		<c:set var="listcount" value="${listcount-1}" />
 </c:forEach>		
 
 
@@ -53,7 +54,7 @@
         <table width="700" border="0" cellspacing="0" cellpadding="5">
           <tr>&nbsp;</tr><tr>
              <td colspan="5">        
-                <div align="center">[1][2][3]</div>
+                <div align="center">${pageList}</div>
 			  </td>
 			 </tr>
 		</table>
@@ -63,18 +64,19 @@
 			<td width="25%"> &nbsp;</td>
 			<td width="50%" align="center">
 				<table>
-					<form>	
+					<form name="board" method="post" action="board_list">	
+					<input type="hidden" name="page" value="${page}">
 					<!-- 검색어를 이용하여 글제목, 작성자, 글내용 중에 하나를 입력 받아 처리하기 위한 부분 -->
 						<tr>
 							<td>
 								<select name="search">
-									<option value="">글제목</option>
-									<option value="">작성자</option>
-									<option value="">글내용</option>
+									<option value="subject" <c:if test="${pageDTO.search=='subject'}">selected</c:if> >글제목</option>
+									<option value="name" <c:if test="${pageDTO.search=='name'}">selected</c:if>>작성자</option>
+									<option value="contents" <c:if test="${pageDTO.search=='contents'}">selected</c:if>>글내용</option>
 								</select>
 							</td>
-							<td> <input type="text" size=20 name=""></td>
-							<td> <a href="#"><img src="/img/search2.gif" border="0"></a></td>
+							<td> <input type="text" size=20 name="key" value="${pageDTO.key}"></td>
+							<td> <a href="javascript:board_search()"><img src="/img/search2.gif" border="0"></a></td>
 						</tr>
 					</form>
 				</table>
@@ -87,3 +89,13 @@
 </body>
 </html>
 
+<script>
+	function board_search(){
+		if(board.key.value==""){
+			alert("검색어를 입력하세요");
+			board.key.focus();
+			return;
+		}
+		board.submit();
+	}
+</script>

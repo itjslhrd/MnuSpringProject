@@ -5,10 +5,65 @@
 	<select id="boardCount" resultType="int">
 		select count(*) from tbl_board	
 	</select>
+	<!-- 전체 자료 수(검색 O) -->
+	<select id="boardCountSearch" resultType="int">
+		select count(*) from tbl_board where
+			<choose>
+				<when test="search=='name'">
+					name like concat('%',#{key},'%')
+				</when>
+				<when test="search=='subject'">
+					subject like concat('%',#{key},'%')
+				</when>
+				<when test="search=='contents'">
+					contents like concat('%',#{key},'%')
+				</when>
+			</choose>	
+	</select>
 
 	<!-- 전체 자료 -->
 	<select id="boardList" resultType="com.mnu.exboard.domain.BoardDTO">
 		select * from tbl_board order by idx desc
+	</select>
+
+	<!-- 전체 자료(검색 O) -->
+	<select id="boardListSearch" resultType="com.mnu.exboard.domain.BoardDTO">
+		select * from tbl_board where
+			<choose>
+				<when test="search=='name'">
+					name like concat('%',#{key},'%')
+				</when>
+				<when test="search=='subject'">
+					subject like concat('%',#{key},'%')
+				</when>
+				<when test="search=='contents'">
+					contents like concat('%',#{key},'%')
+				</when>
+			</choose>	
+				
+		order by idx desc
+	</select>
+
+	<!-- 전체 자료(검색 X, 페이지 O) -->
+	<select id="boardListPage" resultType="com.mnu.exboard.domain.BoardDTO">
+		select * from tbl_board order by idx desc limit #{startpage}, #{maxlist} 
+	</select>
+
+	<!-- 전체 자료(검색 O, 페이지 O) -->
+	<select id="boardListSearchPage" resultType="com.mnu.exboard.domain.BoardDTO">
+		select * from tbl_board where
+			<choose>
+				<when test="search=='name'">
+					name like concat('%',#{key},'%')
+				</when>
+				<when test="search=='subject'">
+					subject like concat('%',#{key},'%')
+				</when>
+				<when test="search=='contents'">
+					contents like concat('%',#{key},'%')
+				</when>
+			</choose>	
+		order by idx desc limit #{startpage},#{maxlist}
 	</select>
 
 	<!-- 등록 -->
@@ -17,9 +72,25 @@
 					values(#{name},#{subject},${contents},#{pass})
 	</insert>
 	
+	<!-- 조회스 증가 -->
+	<update id="boardHits">
+		update tbl_board set readcnt=readcnt+1 where idx=#{idx}
+	</update>
+	
 	<!-- 뷰 -->
 	<select id="boardView">
 		select * from tbl_board where idx=#{idx}
 	</select>
+	
+	<!-- 수정 -->
+	<update id="boardModify">
+		update tbl_board set subject=#{subject}, contents=#{contents}
+					where idx=#{idx} and pass=#{pass}
+	</update>
+	
+	<!-- 삭제 -->
+	<delete id="boardDelete">
+		delete from tbl_board where idx=#{idx} and pass=#{pass} 
+	</delete>
 	
 </mapper>
