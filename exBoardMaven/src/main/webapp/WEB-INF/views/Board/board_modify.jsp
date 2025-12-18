@@ -34,6 +34,7 @@
      <img src="/img/bullet-02.gif"><font size="2" face="돋움">는 필수 입력 사항입니다.</font><p>
      <form name="board" method="post" action="board_modify">
 		<input type="hidden" name="idx" value="${boardDTO.idx}">
+		<input type="hidden" name="page" value="${page}">
 	  <table border="0">
        <tr>
          <td width="5%" align="right"><img src="/img/bullet-02.gif"></td>

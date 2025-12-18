@@ -48,11 +48,11 @@
        <!-- 새글쓰기 -->
        <button onClick="board_write()">새글</button>&nbsp;&nbsp;
       <!-- 수정하기 -->
-       <button onClick="location.href='/Board/board_modify?idx=${board.idx}'">수정</button>&nbsp;&nbsp;
+       <button onClick="location.href='/Board/board_modify?idx=${board.idx}&page=${page}'">수정</button>&nbsp;&nbsp;
          <!-- 삭제하기 -->
        <button onClick="board_delete()">삭제</button>&nbsp;&nbsp;
        <!-- 목록보기 -->
-       <button onClick="location.href='/Board/board_list'">목록</button>&nbsp;&nbsp;
+       <button onClick="location.href='/Board/board_list?page=${page}'">목록</button>&nbsp;&nbsp;
       </font>
 
 	<!--  다음에 추가할 부분 -->
@@ -65,10 +65,10 @@
 
 <script>
 	function board_write(){
-		location.href="/Board/board_write";
+		location.href="/Board/board_write?page=${page}";
 	}
 	function board_delete(){
-		url="/Board/board_delete?idx=${board.idx}";
+		url="/Board/board_delete?idx=${board.idx}&page=${page}";
 		window.open(url,"board_delete","width=300, height=250");
 	}
 	

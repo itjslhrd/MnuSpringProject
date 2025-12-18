@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -119,12 +120,12 @@ public class BoardController {
 	
 	
 	@GetMapping("board_write")
-	public void boardWrite() {
+	public void boardWrite(@ModelAttribute("page") int page) {
 		log.info("Controller Call : board_write");
 	}
 
 	@PostMapping("board_write")
-	public String boardWritePro(BoardDTO dto, Model model) {
+	public String boardWritePro(BoardDTO dto, @ModelAttribute("page") int page, Model model) {
 		log.info("Controller Call : board_write_pro");
 		
 		int row = boardService.boardWrite(dto);
@@ -135,11 +136,12 @@ public class BoardController {
 	
 	//뷰
 	@GetMapping("board_view")
-	public String boardView(int idx, Model model) {
+	public String boardView(@ModelAttribute("page") int page,  int idx, Model model) {
 		log.info("Controller Call : board_view");
 		//조회수ㅡ증가
 		boardService.boardHits(idx);
 		
+		//model.addAttribute("page", page);
 		model.addAttribute("board", boardService.boardView(idx));
 		
 		return "/Board/board_view";
@@ -147,7 +149,7 @@ public class BoardController {
 	
 	//수정 폼(Get)
 	@GetMapping("board_modify")
-	public void boardModify(int idx, Model model) {
+	public void boardModify(int idx, @ModelAttribute("page") int page, Model model) {
 		log.info("Controller Call : board_modify");
 		BoardDTO boardDTO = boardService.boardSelect(idx);
 		
@@ -156,7 +158,7 @@ public class BoardController {
 	
 	//수정처리(Post)
 	@PostMapping("board_modify")
-	public String boardModifyPro(BoardDTO boardDTO, Model model) {
+	public String boardModifyPro(BoardDTO boardDTO, @ModelAttribute("page") int page, Model model) {
 		log.info("Controller Call : board_modify_pro");
 		
 		//int row = boardService.boardModify(boardDTO);
@@ -167,14 +169,14 @@ public class BoardController {
 	}
 	//삭제 폼(Get)
 	@GetMapping("board_delete")
-	public void boardDelete(int idx, Model model) {
+	public void boardDelete(int idx, @ModelAttribute("page") int page, Model model) {
 		log.info("Controller Call : board_delete");
 		
 		model.addAttribute("idx", idx);
 	}
 	//삭제 처리(Post)
 	@PostMapping("board_delete")
-	public String boardDeletePro(int idx, String pass, Model model) {
+	public String boardDeletePro(int idx, String pass, @ModelAttribute("page") int page, Model model) {
 		log.info("Controller Call : board_delete_pro");
 		
 		model.addAttribute("row", boardService.boardDelete(idx, pass));

@@ -17,6 +17,7 @@
  <body>
  <form name="board" method="post" action="board_delete">
  <input type="hidden" name="idx" value="${idx}">
+ <input type="hidden" name="page" value="${page}">
    <table border="0" cellpadding="0" cellspacing="0" width="300" align="center">
      <tr>
        <td height="50">

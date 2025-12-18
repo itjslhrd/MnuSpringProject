@@ -26,7 +26,7 @@
      <img src="/img/bullet-03.gif"><font size="2" face="돋움" color="orange"> 잠깐</font> &nbsp;
      <img src="/img/bullet-02.gif"><font size="2" face="돋움">는 필수 입력 사항입니다.</font><p>
      <form name="board" method="post" action="board_write">
-
+		<input type="hidden" name="page" value="${page}">
 	  <table border="0">
        <tr>
          <td width="5%" align="right"><img src="/img/bullet-02.gif"></td>

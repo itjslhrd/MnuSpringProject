@@ -40,7 +40,7 @@
 			<font face="돋움" size="2" color="#000000">${listcount}</font></td>
 			<td align="left" height="20">&nbsp;
 				<font face="돋움" size="2" color="#000000">
-				<a class="list" href="board_view?idx=${board.idx}">${board.subject}</a></td>
+				<a class="list" href="board_view?idx=${board.idx}&page=${page}">${board.subject}</a></td>
 					<td align="center" height="20"><font face="돋움" size="2">
 					<a class="list" href="mailto:ein1027@nate.com">${board.name}</a></font></td>
 				<td align="center" height="20"><font face="돋움" size="2">${fn:substring(board.regdate,0,10)}</font></td>
@@ -82,7 +82,7 @@
 				</table>
 			</td>
 			<td width="25%" align="right">
-			<a href="board_write"><img src="/img/write.gif" border="0"></a>
+			<a href="board_write?page=${page}"><img src="/img/write.gif" border="0"></a>
 			</td>
 		</tr>
 	</table>
