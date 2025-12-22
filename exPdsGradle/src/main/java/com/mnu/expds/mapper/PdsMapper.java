@@ -22,8 +22,10 @@ public interface PdsMapper {
 	public int pdsWrite(PdsDTO pdsDTO);
 	
 	//검색(특정 idx) -->View, Modify
+	public PdsDTO pdsSelect(int idx);
 	
 	//수정
+	public int pdsModify(PdsDTO pdsDTO);
 	
 	//삭제
 	

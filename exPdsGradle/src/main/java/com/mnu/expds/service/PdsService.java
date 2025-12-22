@@ -2,6 +2,8 @@ package com.mnu.expds.service;
 
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+
 import com.mnu.expds.domain.PdsDTO;
 
 public interface PdsService {
@@ -18,9 +20,14 @@ public interface PdsService {
 	//등록
 	public int pdsWrite(PdsDTO pdsDTO);
 	
+	//public int pdsWrite2(MultipartHttpServletRequest request);
 	//검색(특정 idx) -->View, Modify
 	
+	//view, modify
+	public PdsDTO pdsSelect(int idx);
+	
 	//수정
+	public int pdsModify(MultipartHttpServletRequest request);
 	
 	//삭제
 	

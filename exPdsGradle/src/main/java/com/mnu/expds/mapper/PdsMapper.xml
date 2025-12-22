@@ -17,5 +17,15 @@
 					values(#{name},#{subject},#{contents},#{pass},#{filename})
 	</insert>
 
+	<!-- view, modify -->
+	<select id="pdsSelect" resultType="com.mnu.expds.domain.PdsDTO">
+		select * from tbl_pds where idx=#{idx}
+	</select>
+
+	<!--  수정 -->
+	<update id="pdsModify">
+		update tbl_pds set subject=#{subject}, contents=#{contents},
+				filename=#{filename} where idx=#{idx} and pass=#{pass}
+	</update>
 
 </mapper>
