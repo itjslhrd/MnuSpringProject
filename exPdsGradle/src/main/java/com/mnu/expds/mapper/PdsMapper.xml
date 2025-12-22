@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mnu.expds.mapper.PdsMapper">
+	<!--  전체 카운트 -->
+	<select id="pdsCount" resultType="int">
+		select count(*) from tbl_pds
+	</select>
+	
+	<!-- 전체목록 -->
+	<select id="pdsList" resultType="com.mnu.expds.domain.PdsDTO">
+		select * from tbl_pds order by idx desc
+	</select>
+	
+	<!-- 등록 -->
+	<insert id="pdsWrite">
+		insert into tbl_pds(name, subject, contents, pass, filename)
+					values(#{name},#{subject},#{contents},#{pass},#{filename})
+	</insert>
+
+
+</mapper>
