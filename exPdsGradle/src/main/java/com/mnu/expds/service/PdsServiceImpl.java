@@ -8,8 +8,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.mnu.expds.domain.PageDTO;
 import com.mnu.expds.domain.PdsDTO;
 import com.mnu.expds.mapper.PdsMapper;
+
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 @Service
 public class PdsServiceImpl implements PdsService {
@@ -25,17 +30,48 @@ public class PdsServiceImpl implements PdsService {
 	}
 
 	@Override
+	public int pdsCountSearch(PageDTO dto) {
+		return pdsMapper.pdsCountSearch(dto);
+	}
+	
+	@Override
 	public List<PdsDTO> pdsList() {
 		
 		return pdsMapper.pdsList();
 	}
 
 	@Override
+	public List<PdsDTO> pdsListSearchPage(PageDTO dto) {
+		return pdsMapper.pdsListSearchPage(dto);
+	}
+	
+	@Override
 	public int pdsWrite(PdsDTO pdsDTO) {
-		
 		return pdsMapper.pdsWrite(pdsDTO);
 	}
 
+	@Override
+	public void pdsHits(int idx, HttpServletRequest request, HttpServletResponse response) {
+		//쿠키설정
+		boolean bool=false;
+		Cookie info = null;
+		Cookie[] cookies = request.getCookies();
+		for(int i=0; i<cookies.length; i++) {
+			info =cookies[i];
+			if(info.getName().equals("pdsCookie"+idx)) {
+				bool = true;
+				break;
+			}
+		}
+		String str="" + System.currentTimeMillis();
+		if(!bool) {
+			info = new Cookie("pdsCookie"+idx, str);
+			info.setMaxAge(60*5);//5분
+			response.addCookie(info);
+			pdsMapper.pdsHits(idx);		
+		}
+
+	}
 	
 	@Override
 	public PdsDTO pdsSelect(int idx) {
@@ -75,4 +111,10 @@ public class PdsServiceImpl implements PdsService {
 
 		return pdsMapper.pdsModify(pdsDTO);
 	}
+
+	@Override
+	public int pdsDelete(PdsDTO dto) {
+		return pdsMapper.pdsDelete(dto);
+	}
+	
 }

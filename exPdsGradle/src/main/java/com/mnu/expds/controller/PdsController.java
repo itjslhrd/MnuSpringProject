@@ -8,14 +8,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.mnu.expds.domain.PdsDTO;
 import com.mnu.expds.service.PdsService;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
 @RequestMapping("Pds")
@@ -101,6 +105,7 @@ public class PdsController {
 	@PostMapping("pds_modify")
 	public String pdsModifyPro(MultipartHttpServletRequest request, Model model) {
 /*
+ * 		//수정처리는 service에서 처리
 		PdsDTO pdsDTO = new PdsDTO();
 		pdsDTO.setIdx(Integer.parseInt(request.getParameter("idx")));
 		pdsDTO.setName(request.getParameter("name"));
@@ -139,5 +144,33 @@ public class PdsController {
 		return "/Pds/pds_modify_pro";
 	
 	}
+
+	//삭제
+	@GetMapping("pds_delete")
+	public void pdsDelete(@ModelAttribute("idx") int idx) {
+		log.info("Call  :  pds_delete (삭제 폼)" );
+	}
 	
+	//삭제처리
+	@PostMapping("pds_delete")
+	public String pdsDeletePro(PdsDTO dto, RedirectAttributes rttr, HttpServletRequest request) {
+		log.info("Call  :  pds_delete (삭제 처리)" );
+		PdsDTO pds = pdsService.pdsSelect(dto.getIdx());
+		int row=pdsService.pdsDelete(dto);
+		rttr.addFlashAttribute("row", row);
+		if(row==1) {
+			if(pds.getFilename() != null) {
+				File file = new File(request.getServletContext().getRealPath("/upload/") + pds.getFilename());
+				file.delete();
+			}
+		}	
+		return "redirect:pds_delete_pro";
+	}
+
+	//삭제처리 알림
+	@GetMapping("pds_delete_pro")
+	public void pdsDeletePass() {
+		log.info("pdsDeletePro() . OK.......");
+	}
+
 }
