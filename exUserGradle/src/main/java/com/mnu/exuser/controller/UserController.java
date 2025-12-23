@@ -2,8 +2,14 @@ package com.mnu.exuser.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.mnu.exuser.service.UserService;
 
 @Controller
 @RequestMapping("User")
@@ -12,12 +18,17 @@ public class UserController {
 	private Logger log = 
 			LoggerFactory.getLogger(UserController.class);
 	
+	//서비스 주입
+	@Autowired
+	private UserService userService;
+	
 	//로그인 폼
 	@RequestMapping("user_login")
 	public void userLogin() {
 		log.info("Call : user_login");
 	}
 	//로그인 처리
+	
 	
 	//회원 가입폼
 	@RequestMapping("user_insert")
@@ -26,6 +37,12 @@ public class UserController {
 	}
 	
 	//ID 중복 검사
+	@ResponseBody
+	@RequestMapping("user_idCheck")
+	public String userIdCheck(@RequestParam("userid") String userid) {
+		int row = userService.userIdCheck(userid);
+		return String.valueOf(row);
+	}
 	
 	//본인인증(email 또는 SMS)
 	
