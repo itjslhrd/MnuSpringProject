@@ -5,10 +5,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.mnu.exuser.domain.UserDTO;
 import com.mnu.exuser.service.UserService;
 
 @Controller
@@ -40,6 +42,7 @@ public class UserController {
 	@ResponseBody
 	@RequestMapping("user_idCheck")
 	public String userIdCheck(@RequestParam("userid") String userid) {
+		log.info("Call : user_idCheck");
 		int row = userService.userIdCheck(userid);
 		return String.valueOf(row);
 	}
@@ -47,7 +50,16 @@ public class UserController {
 	//본인인증(email 또는 SMS)
 	
 	//회원 가입처리
-	
+	@PostMapping("user_insert")
+	public String userInsert(UserDTO userDTO, Model model) {
+		log.info("Call : user_insert(post)");
+		//log.info("name : " + userDTO.getName());
+		//log.info("userid : " + userDTO.getUserid());
+		//log.info("passwd : " + userDTO.getPasswd());
+		//log.info("tel : " + userDTO.getTel());
+		model.addAttribute("row", userService.userInsert(userDTO));
+		return "/User/user_insert_pro";
+	}
 	//회원 정보수정폼
 	
 	//회원정보 수정처리
