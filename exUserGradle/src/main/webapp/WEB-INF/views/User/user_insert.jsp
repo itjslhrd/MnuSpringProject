@@ -101,9 +101,33 @@ td   { font-family: 돋움, Verdana; font-size: 9pt; text-decoration: none; colo
 		
 		//SMS 본인인증
 		
+		//이메일 체크
+		$("#email3").change(function(){
+			if($("#email3").val()!=0){
+				$("#email2").val($("#email3").val());
+				$("#email2").attr("readonly", true);
+			}else{
+				$("#email2").attr("readonly", false);
+				$("#email2").val('');
+			}
+		});
+		
+		//이메일 인증
 		
 	});
-
+	
+	//전통적인 자바스크립트 방식
+	//이메일 체크(이메일 입력체크)
+	function emailCheck(){
+		if(user.email3.selectedIndex != 0){
+			user.email2.readOnly=true;
+			user.email2.value = user.email3.value;
+		}else{
+			user.email2.readOnly=false;
+			user.email2.value = "";			
+		}
+	}
+	
 </script>
 </head>
 
@@ -191,16 +215,16 @@ td   { font-family: 돋움, Verdana; font-size: 9pt; text-decoration: none; colo
                 					<font color=red>&nbsp;</font>
 								</td>
 								<td bgcolor=WHITE valign=middle>
-									<input type="text" name="email1" size=13 maxlength="15">
-									@ <input type="text" name="email2" size=13 maxlength="15">
-									<select name="email2">
+									<input type="text" id="email1" name="email1" size=13 maxlength="15">
+									@ <input type="text" id="email2" name="email2" size=13 maxlength="15">
+									<select id="email3" name="email3" >
 		      							<option value="0">직접입력</option>
 		      							<option value="naver.com">naver.com</option>
 		      							<option value="daum.net">daum.net</option>
 		      							<option value="nate.com">nate.com</option>
 		      							<option value="gmail.com">gmail.com</option>
 		  							   </select>
-									 <input type="button"  value="인증하기">
+									 <input type="button"  id="emailBtn" value="인증하기">
 								</td>
 							</tr>
 						</table>
