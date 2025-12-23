@@ -1,16 +1,11 @@
-package com.mnu.expds.controller;
+package com.mnu.exuser.controller;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class MainController {
-	//로그 출력용
-	private Logger log = 
-			LoggerFactory.getLogger(PdsController.class);
-
+	
 	@RequestMapping("")
 	public String mainIndex() {
 		return "index";
