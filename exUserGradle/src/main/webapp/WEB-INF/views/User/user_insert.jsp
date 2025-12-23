@@ -20,6 +20,49 @@ td   { font-family: 돋움, Verdana; font-size: 9pt; text-decoration: none; colo
 <script type="text/javascript">
 	$(function(){
 		$("#smscheck").hide();
+		//유횽성 검사
+		$("#userSend").click(function(){
+			//이름검사
+			if($("#name").val()==''){
+				alert("이름을 입력하세요");
+				$("#name").focus();
+				return;
+			}
+			//ID 검사
+			if($("#userid").val()==''){
+				alert("아이디을 입력하세요");
+				$("#userid").focus();
+				return;
+			}
+			
+			//비밀번호 검사
+			if($("#passwd").val()==''){
+				alert("비밀번호를 입력하세요");
+				$("#passwd").focus();
+				return;
+			}
+			//비밀번호 확인 검사
+			if($("#repasswd").val()==''){
+				alert("비밀번호확인를 입력하세요");
+				$("#repasswd").focus();
+				return;
+			}
+			//전화번호
+			if($("#tel").val()==''){
+				alert("전화번호를 입력하세요");
+				$("#tel").focus();
+				return;
+			}
+			
+			$("#user").submit();//전송
+		});
+		
+		// 모두 지우고 다시쓰기
+		$("#userReset").click(function(){
+			alert("모든 항목을 지우고 다시 입력합니다");
+			$("#user")[0].reset();
+			$("#name").focus();
+		});
 		
 		//아이디 중복 검사
 		$("#userid").change(function(){
@@ -45,7 +88,20 @@ td   { font-family: 돋움, Verdana; font-size: 9pt; text-decoration: none; colo
 
 		});
 		
-	
+		//비번확인
+		$("#repasswd").change(function(){
+			if($("#passwd").val() == $("#repasswd").val()){
+				repasswd_c.innerHTML="확인되었습니다";
+			}else{
+				repasswd_c.innerHTML="비밀번호를 다시입력하세요";
+				$("#repasswd").val('');
+				$("#repasswd").focus();
+			}
+		});
+		
+		//SMS 본인인증
+		
+		
 	});
 
 </script>
@@ -64,7 +120,7 @@ td   { font-family: 돋움, Verdana; font-size: 9pt; text-decoration: none; colo
 
   </td>
   <td width="80%" valign="top">&nbsp;<img src="/img/title1.gif" ><br>    
-	<form name="user" method=post action="user_insert">
+	<form id="user" name="user" method=post action="user_insert">
 	<table border=0 cellpadding=0 cellspacing=0 width=730 valign=top>
 		<tr><td align=center><br>                            
 			<table cellpadding=0 cellspacing=0 border=0 width=650 align=center>       
@@ -160,8 +216,8 @@ td   { font-family: 돋움, Verdana; font-size: 9pt; text-decoration: none; colo
 							</tr>
 							<tr bgcolor=#ffffff>
 								<td colspan=3 align=center>
-									<img src="/img/u_bt06.gif" vspace=3 border=0 name=img3>
-									<img src="/img/u_bt05.gif" border=0 hspace=10 vspace=3 name=img4>
+									<img src="/img/u_bt06.gif" vspace=3 border=0 name=img3 id="userSend">
+									<img src="/img/u_bt05.gif" border=0 hspace=10 vspace=3 name=img4 id="userReset">
 								</td>
 							</tr>
 						</table> 
