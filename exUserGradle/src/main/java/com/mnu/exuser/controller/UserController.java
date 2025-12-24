@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -12,6 +13,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mnu.exuser.domain.UserDTO;
 import com.mnu.exuser.service.UserService;
+import com.mnu.exuser.util.UserSHA256;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("User")
@@ -25,13 +30,52 @@ public class UserController {
 	private UserService userService;
 	
 	//로그인 폼
-	@RequestMapping("user_login")
-	public void userLogin() {
-		log.info("Call : user_login");
+	@GetMapping("user_login")
+	public String userLoginForm(HttpSession session) {
+		log.info("Call : user_login(form)");
+		if(session.getAttribute("user") == null) {
+			return "/User/user_login";
+		}else {
+			return "User/user_list";
+		}
 	}
+/*
 	//로그인 처리
-	
-	
+	@PostMapping("user_login")
+	public String userLogin(@RequestParam("userid") String userid, 
+								@RequestParam("passwd") String passwd) {
+								
+		String passwd = userService.userLoginSearch(userid, passwd);
+	}
+*/	
+	//로그인 처리
+	@PostMapping("user_login")
+	public String userLogin(UserDTO userDTO, Model model, HttpServletRequest request) {
+		log.info("Call : user_login");
+		//id에 해당하는 비번 체크
+		String passwd = userService.userLoginSearch(userDTO);
+		//row=1(로그인성공), 0(비번오류), -1(id없음)
+		if(passwd==null) {//비번이 없음
+			//id 없음
+			model.addAttribute("row", -1);
+			return "/User/user_login_pro";
+		}else {//비번이 있는 경우
+			if(passwd.equals(UserSHA256.getSHA256(userDTO.getPasswd()))) {
+				//로그인 성공(세션설정)
+				request.getSession().setAttribute("user", userService.userLogin(userDTO));
+				request.getSession().setMaxInactiveInterval(1800);//세센유효시간
+				//최근 로그인날자 업데이트
+				userService.userLoginLastTimeUpdate(userDTO);
+				model.addAttribute("row", 1);
+				return "/User/user_login_pro";
+			}else {
+				//비번오류
+				model.addAttribute("row", 0);
+				return "/User/user_login_pro";
+			}
+		}
+	}
+
 	//회원 가입폼
 	@RequestMapping("user_insert")
 	public void userInsert() {
@@ -69,8 +113,20 @@ public class UserController {
 		return "/User/user_insert_pro";
 	}
 	//회원 정보수정폼
+	@GetMapping("user_modify")
+	public void userModify() {
+		log.info("Call : user_modify(form)");
+	}
 	
 	//회원정보 수정처리
+	@PostMapping("user_modify")
+	public String userModifyPro(UserDTO userDTO) {
+		log.info("Call : user_modify(pro)");
+		
+		int row = userService.userModify(userDTO);
+		//수정처리 경고 없음
+		return "redirect:user_login";
+	}
 	
 	//ID 찾기 또는 비번찾기 폼
 	

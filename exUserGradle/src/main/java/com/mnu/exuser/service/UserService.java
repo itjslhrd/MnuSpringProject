@@ -1,5 +1,6 @@
 package com.mnu.exuser.service;
 
+import java.util.List;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,8 +66,46 @@ public class UserService {
 		return userMapper.userInsert(userDTO);
 	}
 	
+	//로그인(성공시 1, 실패 0)
+	//public int userLogin(String userid, String passwd);
 	
-
+	//로그인(ID가 존재하면 비번 반환)
+	public String userLoginPass(String userid) {
+		return userMapper.userLoginPass(userid);
+	}
+	
+	public String userLoginSearch(UserDTO userDTO) {
+		return userMapper.userLoginSearch(userDTO);
+	}
+	
+	//로그인 성공시 session저장용
+	public UserDTO userLogin(UserDTO userDTO) {
+		return userMapper.userLogin(userDTO);
+	}
+	
+	//로그인 성공시 최근 로그인날 날짜 업데이트
+	public void userLoginLastTimeUpdate(UserDTO userDTO) {
+		userMapper.userLoginLastTimeUpdate(userDTO);
+	}
+	
+	//회원정보수정
+	public int userModify(UserDTO userDTO) {
+		//비번 암호화
+		userDTO.setPasswd(UserSHA256.getSHA256(userDTO.getPasswd()));
+		
+		return userMapper.userModify(userDTO);
+	}
+	
+	//회원삭제
+	public int userDelete(UserDTO userDTO) {
+		return userMapper.userDelete(userDTO);
+	}
+	
+	//회원전체목록
+	public List<UserDTO> userList(){
+		return userMapper.userList();
+	}
+	
 	//일시비번(4 ~6) 생성
 	private String tempRandonNumer() {
 		Random r = new Random();

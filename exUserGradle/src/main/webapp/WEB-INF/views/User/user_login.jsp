@@ -12,6 +12,22 @@ td   { font-family: 돋움, Verdana; font-size: 9pt; text-decoration: none; colo
 //-->
 </STYLE>
 <link rel="stylesheet" type="text/css" href="/css/stylesheet.css">
+<script>
+	function send(){
+		if(user.userid.value == ""){
+			alert("아이디를 입력하세요");
+			user.userid.focus();
+			return false;
+		}
+		if(user.passwd.value == ""){
+			alert("비밀번호를 입력하세요");
+			user.passwd.focus();
+			return false;
+		}
+		
+	}
+
+</script>
 </HEAD>
 <body bgcolor="#FFFFFF" text="#000000" leftmargin=0 
   topmargin=0 onLoad='document.user.userid.focus();'>
@@ -29,7 +45,7 @@ td   { font-family: 돋움, Verdana; font-size: 9pt; text-decoration: none; colo
   <TD width=100>&nbsp;</td>
   <TD>
     <table width="583" border="0" cellspacing="0" cellpadding="0" height="265">
-	  <form name="user" method=post action="">
+	  <form id=user name="user" method=post action="user_login" onSubmit="return send()">
 	    <tr>
 		  <td height="298"> 
 		    <table width="100%" border="0" cellspacing="0" cellpadding="0">
