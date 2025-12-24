@@ -14,56 +14,48 @@ td   { font-family: 돋움, Verdana; font-size: 9pt; text-decoration: none; colo
 --->
 <link rel="stylesheet" type="text/css" href="/css/stylesheet.css">
 </STYLE>
-<script type="text/javascript" 
-		src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> 
-		
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script type="text/javascript">
 	$(function(){
 		$("#smscheck").hide();
-		//유횽성 검사
+		//유효성 검사
 		$("#userSend").click(function(){
-			//이름검사
 			if($("#name").val()==''){
-				alert("이름을 입력하세요");
+				alert("이름을 입력하세요.");
 				$("#name").focus();
 				return;
 			}
-			//ID 검사
+			//ID검사
 			if($("#userid").val()==''){
-				alert("아이디을 입력하세요");
+				alert("id를 입력하세요.");
 				$("#userid").focus();
 				return;
 			}
-			
-			//비밀번호 검사
+			//Pass
 			if($("#passwd").val()==''){
-				alert("비밀번호를 입력하세요");
+				alert("비밀번호를 입력하세요.");
 				$("#passwd").focus();
 				return;
 			}
-			//비밀번호 확인 검사
 			if($("#repasswd").val()==''){
-				alert("비밀번호확인를 입력하세요");
+				alert("비밀번호확인을 입력하세요.");
 				$("#repasswd").focus();
 				return;
 			}
-			//전화번호
+			//tel
 			if($("#tel").val()==''){
-				alert("전화번호를 입력하세요");
+				alert("전화번호를 입력하세요.");
 				$("#tel").focus();
 				return;
 			}
-			
-			$("#user").submit();//전송
+			$("#user").submit();
 		});
-		
-		// 모두 지우고 다시쓰기
+		// 다시쓰기
 		$("#userReset").click(function(){
-			alert("모든 항목을 지우고 다시 입력합니다");
+			alert("모든 지우고 다시 입력합니다.")
 			$("#user")[0].reset();
 			$("#name").focus();
 		});
-		
 		//아이디 중복 검사
 		$("#userid").change(function(){
 			var userid = $("#userid").val();
@@ -85,51 +77,79 @@ td   { font-family: 돋움, Verdana; font-size: 9pt; text-decoration: none; colo
 					}
 				}
 			});
-
 		});
-		
-		//비번확인
-		$("#repasswd").change(function(){
-			if($("#passwd").val() == $("#repasswd").val()){
-				repasswd_c.innerHTML="확인되었습니다";
-			}else{
-				repasswd_c.innerHTML="비밀번호를 다시입력하세요";
-				$("#repasswd").val('');
-				$("#repasswd").focus();
+	
+	//비번 확인
+	$("#repasswd").change(function(){
+		if($("#passwd").val() == $("#repasswd").val()){
+			repasswd_c.innerHTML="확인되었습니다.";
+		}else{
+			repasswd_c.innerHTML="비밀번호를 다시 입력하세요";
+			$("#repasswd").val('');
+			$("#repasswd").focus();
+		}
+	});
+	//SMS 본인인증
+	$("#phoneBtn1").click(function(){
+		//전화번호 유효성
+		if($("#tel").val()==''){
+			alert("전화번호를 입력해주세요.");
+			$("#tel").focus();
+			return;
+		}
+		var tel = $("#tel").val();
+		//ajax
+		$.ajax({
+			url:'user_sms',
+			type:'post',
+			data:{'tel':tel}, //JSON 타입
+			success:function(result){
+				phone_c.innerHTML="인증번호가 전송되었습니다";
+				$("#usersms").val(result);
 			}
 		});
-		
-		//SMS 본인인증
-		
-		//이메일 체크
-		$("#email3").change(function(){
-			if($("#email3").val()!=0){
-				$("#email2").val($("#email3").val());
-				$("#email2").attr("readonly", true);
-			}else{
-				$("#email2").attr("readonly", false);
-				$("#email2").val('');
-			}
-		});
-		
-		//이메일 인증
-		
+		$("#smscheck").show();
 	});
 	
-	//전통적인 자바스크립트 방식
-	//이메일 체크(이메일 입력체크)
-	function emailCheck(){
-		if(user.email3.selectedIndex != 0){
-			user.email2.readOnly=true;
-			user.email2.value = user.email3.value;
+	//인증번호 확인
+	$("#phoneBtn3").click(function(){
+		if($("#usersms").val() == $("#resms").val()){
+			resms_c.innerHTML="인증되었습니다"
 		}else{
-			user.email2.readOnly=false;
-			user.email2.value = "";			
+			resms_c.innerHTML="인증번호가 맞지않습니다 다시입력하세요"
+			$("#resms").val('');
+			$("#resms").focus();
 		}
-	}
+	});
 	
-</script>
-</head>
+	//이메일 체크
+	$("#email3").change(function(){
+		if($("#email3").val()!=0){
+			$("#email2").val($("#email3").val());
+			$("#email2").attr("readonly", true);
+		}else{
+			$("#email2").attr("readonly", false);
+			$("#email2").val('');
+		}
+	});
+	
+	//이메일 인증
+	
+});
+
+//전통적인 자바스크립트 방식
+//이메일 체크(이메일 입력체크)
+function emailCheck(){
+	if(user.email3.selectedIndex != 0){
+		user.email2.readOnly=true;
+		user.email2.value = user.email3.value;
+	}else{
+		user.email2.readOnly=false;
+		user.email2.value = "";			
+	}
+}
+
+</script></head>
 
 <body bgcolor="#FFFFFF" LEFTMARGIN=0  TOPMARGIN=0 >
  
@@ -145,6 +165,7 @@ td   { font-family: 돋움, Verdana; font-size: 9pt; text-decoration: none; colo
   </td>
   <td width="80%" valign="top">&nbsp;<img src="/img/title1.gif" ><br>    
 	<form id="user" name="user" method=post action="user_insert">
+	<input type="hidden" id=usersms name=usersms>
 	<table border=0 cellpadding=0 cellspacing=0 width=730 valign=top>
 		<tr><td align=center><br>                            
 			<table cellpadding=0 cellspacing=0 border=0 width=650 align=center>       
@@ -195,7 +216,7 @@ td   { font-family: 돋움, Verdana; font-size: 9pt; text-decoration: none; colo
 							<tr>
 								<TD BGCOLOR="#EFF4F8">&nbsp;전화번호<font color=red>&nbsp;*</font></td>
 								<TD BGCOLOR=WHITE>
-									<input type=text name=tel size=13 maxlength=13 value="" placeholder="휴대전화번호 (-제외)">
+									<input type=text id=tel name=tel size=13 maxlength=13 value="" placeholder="휴대전화번호 (-제외)">
 									<input type="button" id="phoneBtn1" value="인증번호받기">
 									<font id="phone_c" size="2" color="red">&nbsp;</font>
 								</td>
@@ -203,7 +224,7 @@ td   { font-family: 돋움, Verdana; font-size: 9pt; text-decoration: none; colo
 							<tr id="smscheck">
 								<TD BGCOLOR="#EFF4F8">&nbsp;인증번호<font color=red>&nbsp;*</font></td>
 								<TD BGCOLOR=WHITE>
-									<input type=text name="smsnumber" size=13 maxlength=13 placeholder="인증번호를 입력하세요">
+									<input type=text id="resms" name="resms" size=13 maxlength=13 placeholder="인증번호를 입력하세요">
 									<input type="button" id="phoneBtn2" value="재발송">
                     				<font id="resms_r" size="2" color="red">&nbsp;</font>
                     				<input type="button" value="인증" id="phoneBtn3">

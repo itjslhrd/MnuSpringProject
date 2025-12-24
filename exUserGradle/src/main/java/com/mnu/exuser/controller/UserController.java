@@ -48,7 +48,15 @@ public class UserController {
 	}
 	
 	//본인인증(email 또는 SMS)
-	
+	@ResponseBody
+	@PostMapping("user_sms")
+	public String smsSend(@RequestParam("tel") String tel) {
+		
+		String tempNum = userService.sendSMS(tel);
+		
+		log.info("인증코드 : " + tempNum);
+		return tempNum;
+	}
 	//회원 가입처리
 	@PostMapping("user_insert")
 	public String userInsert(UserDTO userDTO, Model model) {
