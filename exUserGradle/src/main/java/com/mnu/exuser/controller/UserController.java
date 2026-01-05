@@ -36,7 +36,7 @@ public class UserController {
 		if(session.getAttribute("user") == null) {
 			return "/User/user_login";
 		}else {
-			return "User/user_list";
+			return "User/user_list";//로그인 되어 있는 경우 이동 경로 지정
 		}
 	}
 /*
@@ -78,10 +78,17 @@ public class UserController {
 
 	//회원 가입폼
 	@RequestMapping("user_insert")
-	public void userInsert() {
+	public String userInsert(HttpSession session) {
 		log.info("Call : user_insert");
+		if(session.getAttribute("user") == null) {
+			return "/User/user_insert";
+		}else {
+			return "User/user_list";//로그인 되어 있는 경우 이동 경로 지정
+		}
+		
 	}
-	
+
+
 	//ID 중복 검사
 	@ResponseBody
 	@RequestMapping("user_idCheck")
@@ -128,6 +135,13 @@ public class UserController {
 		return "redirect:user_login";
 	}
 	
+	//로그아웃 처리
+	@GetMapping("user_logout")
+	public String userLogout(HttpSession session) {
+		log.info("user_Logout..............");
+		session.invalidate();
+		return "/index";
+	}
 	//ID 찾기 또는 비번찾기 폼
 	
 	// ID 찾기 또는 비번찾기 처리

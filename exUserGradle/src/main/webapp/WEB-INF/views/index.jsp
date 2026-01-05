@@ -14,7 +14,7 @@
 	<h3><a href="/User/user_login">로그인</a></h3>
 </c:if>	
 <c:if test="${!empty user}">	
-	<h3><a href="/User/user_login">로그아웃</a></h3>
+	<h3><a href="/User/user_logout">로그아웃</a></h3>
 	<h3><a href="/User/user_modify">정보수정</a></h3>
 </c:if>	
 </body>
