@@ -1,62 +1,69 @@
 <!DOCTYPE html>
 <html>
- <head><meta http-equiv="Content-Type" content="text/html; charset=euc-kr">
-   <title>∞‘Ω√∆« ≥ªøÎ ∫∏±‚</title>
-   <link rel="stylesheet" type="text/css" href="/stylesheet.css">
+ <head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <title>Í≤åÏãúÌåê ÎÇ¥Ïö© Î≥¥Í∏∞</title>
+   <link rel="stylesheet" type="text/css" href="/css/stylesheet.css">
    <style type="text/css">
      td.title { padding:4px; background-color:#e3e9ff }
      td.content { padding:10px; line-height:1.6em; text-align:justify; }
      a.list { text-decoration:none;color:black;font-size:10pt; }
    </style>
+<script>
+	function board_del(idx, page){
+		url="board_delete?idx="+idx+"&page="+page;
+		window.open(url,"board_delete","width=300 height=300");
+		
+	}
 
+</script>
  </head>
  <body topmargin="0" leftmargin="0">
    <table border="0" width="800">
      <tr>
        <td width="20%"  height="500" bgcolor="#ecf1ef" valign="top">
 
-		 <!--  ¥Ÿ¿Ωø° √ﬂ∞°«“ ∫Œ∫– -->
+		 <!--  Îã§ÏùåÏóê Ï∂îÍ∞ÄÌï† Î∂ÄÎ∂Ñ -->
 
 	   </td>
        <td width="80%" valign="top">&nbsp;<br>
          <table border="0" width="90%" align="center">
            <tr>
-             <td colspan="2"><img src="./img/bullet-01.gif"> 
-              <font color="blue" size="3">¿⁄ ¿Ø ∞‘ Ω√ ∆«</font><font size="2"> - ±€¿–±‚</font></td>
+             <td colspan="2"><img src="/img/bullet-01.gif"> 
+              <font color="blue" size="3">Ïûê Ïú† Í≤å Ïãú Ìåê</font><font size="2"> - Í∏ÄÏùΩÍ∏∞</font></td>
            </tr>
          </table>
        <p>
        <table border="0" width="90%" align="center" cellspacing="0"  style="border-width:1px;border-color:#0066cc;border-style:outset;">
          <tr bgcolor="e3e9ff">
            <td class="title">
-             <img src="./img/bullet-04.gif"> <font size="2" face="µ∏øÚ">¡¶∏Ò∫Œ∫–</font>
+             <img src="/img/bullet-04.gif"> <font size="2" face="ÎèãÏõÄ" th:text="${board.subject}"></font>
            </td>
          </tr>
          <tr>
            <td class="content">
-             <p align="right"><font size="2" face="µ∏øÚ">
-              <a class="list" href="mailto:ein1027@nate.com">≥™¡æπŒ</a> / <font size="2" face="µ∏øÚ">2007-1022 / 2π¯ ¿–¿Ω</font>
-             <p>≥ªøÎ¿Ã µÈæÓ∞°¥¬ ∫Œ∫–<p><!--contents¿« ≥ªøÎ¿ª <BR>≈¬±◊∑Œ √≥∏Æ-->
+             <p align="right"><font size="2" face="ÎèãÏõÄ" th:text="${board.name}"></font>
+               / <font size="2" face="ÎèãÏõÄ" th:text="|${board.regdate} / ${board.readcnt}Î≤à ÏùΩÏùå|"></font>
+             <p th:utext="${board.contents}"><p><!--contentsÏùò ÎÇ¥Ïö©ÏùÑ <BR>ÌÉúÍ∑∏Î°ú Ï≤òÎ¶¨-->
            </td>
          </tr>
        </table>
   
-      <!--**** ø©±‚º≠∫Œ≈Õ ∞‘Ω√π∞ ≥ªøÎ æ∆∑°¬ ¿« πˆ∆∞µÈ¿Ã ≥™ø…¥œ¥Ÿ. ¥‰∫Ø, ºˆ¡§, ªË¡¶, ∏Ò∑œ∫∏±‚ ****-->
+      <!--**** Ïó¨Í∏∞ÏÑúÎ∂ÄÌÑ∞ Í≤åÏãúÎ¨º ÎÇ¥Ïö© ÏïÑÎûòÏ™ΩÏùò Î≤ÑÌäºÎì§Ïù¥ ÎÇòÏòµÎãàÎã§. ÎãµÎ≥Ä, ÏàòÏ†ï, ÏÇ≠Ï†ú, Î™©Î°ùÎ≥¥Í∏∞ ****-->
       <p align="center">
       <font size="2">
-       <!-- ªı±€æ≤±‚ -->
-       <a href="">
-       <img src="./img/write.jpg" border="0"></a>&nbsp;&nbsp;
-      <!-- ºˆ¡§«œ±‚ -->
-       <a href="">
-       <img src="./img/edit.gif" border="0"></a>&nbsp;&nbsp;
-         <!-- ªË¡¶«œ±‚ -->
-       <a href=""><img src="./img/del.gif" border="0"></a>&nbsp;&nbsp;
-       <!-- ∏Ò∑œ∫∏±‚ -->
-       <a href=""><img src="./img/list-2.gif" border="0"></a>&nbsp;&nbsp;
+       <!-- ÏÉàÍ∏ÄÏì∞Í∏∞ -->
+       <a th:href="@{board_write(page=1)}">
+       <img src="/img/write.jpg" border="0"></a>&nbsp;&nbsp;
+      <!-- ÏàòÏ†ïÌïòÍ∏∞ -->
+       <a th:href="@{board_modify(idx=${board.idx}, page=1)}">
+       <img src="/img/edit.gif" border="0"></a>&nbsp;&nbsp;
+         <!-- ÏÇ≠Ï†úÌïòÍ∏∞ -->
+       <a th:onclick="|javascript:board_del('${board.idx}','${1}')|"><img src="/img/del.gif" border="0"></a>&nbsp;&nbsp;
+       <!-- Î™©Î°ùÎ≥¥Í∏∞ -->
+       <a th:href="@{board_list(page=1)}"><img src="/img/list-2.gif" border="0"></a>&nbsp;&nbsp;
       </font>
 
-	<!--  ¥Ÿ¿Ωø° √ﬂ∞°«“ ∫Œ∫– -->
+	<!--  Îã§ÏùåÏóê Ï∂îÍ∞ÄÌï† Î∂ÄÎ∂Ñ -->
 
     </td>
   </tr>

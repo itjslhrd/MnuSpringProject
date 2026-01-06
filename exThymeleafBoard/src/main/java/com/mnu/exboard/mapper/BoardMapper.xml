@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mnu.exboard.mapper.BoardMapper">
+	<!-- 총 게시글 수(검색조건 없음) -->
+	<select id="boardCount" resultType="int">
+	      select count(*) from tbl_board;
+	</select>
+
+	<!-- 총 게시글 수(검색조건 포함) -->
+	<select id="boardCountSearch" resultType="int">
+	      select count(*) from tbl_board where
+	      	<choose>
+	      		<when test="search=='name'">
+	      			name like concat('%', #{key},'%')
+	      		</when>
+	      		<when test="search=='subject'">
+	      			name like concat('%', #{key},'%')
+	      		</when>
+	      		<when test="search=='contents'">
+	      			name like concat('%', #{key},'%')
+	      		</when>
+	      	</choose>
+	</select>
+
+	<!-- 전체게시글수 카운트(검색 O) oracle -->
+<!-- 	
+	<select id="guestCountSearch" resultType="int">
+		select count(*) from tbl_board where
+					<choose>
+						<when test="search=='subject'">
+								 subject like '%' || #{key} || '%'
+						</when>
+						<when test="search=='name'">
+								name like '%' || #{key} || '%'
+						</when>
+						<when test="search=='contents'">
+								contents like '%' || #{key} || '%'
+						</when>
+					</choose>
+	</select>
+-->
+	<!-- 글 전체 목록(검색, 페이지처리 없음) -->
+	<select id="boardList" resultType="com.mnu.exboard.domain.BoardDTO">
+		select * from tbl_board order by idx desc;
+	</select>
+	
+	<!-- 글 전체 목록(검색 O, 페이지처리 O) -->
+	<select id="boardListSearchPage" resultType="com.mnu.exboard.domain.BoardDTO">
+		select * from tbl_board where 
+			<choose>
+	      		<when test="search=='name'">
+	      			name like concat('%', #{key},'%')
+	      		</when>
+	      		<when test="search=='subject'">
+	      			name like concat('%', #{key},'%')
+	      		</when>
+	      		<when test="search=='contents'">
+	      			name like concat('%', #{key},'%')
+	      		</when>
+	      	</choose>
+			order by idx desc limit #{startpage}, #{maxlist}
+	</select>
+	
+	<!-- 전체목록 검색(검색 O, 페이지 O) oracle 용-->
+<!-- 	
+	<select id="guestListPageSearch" resultType="com.jslhrd.thymeleaf.domain.GuestDTO">
+		select X.* from (select rownum as rnum, A.* from
+				(select * from tbl_guest order by idx desc) A where
+					<choose>
+						<when test="search=='subject'">
+								 subject like '%' || #{key} || '%'
+						</when>
+						<when test="search=='name'">
+								name like '%' || #{key} || '%'
+						</when>
+						<when test="search=='contents'">
+								contents like '%' || #{key} || '%'
+						</when>
+					</choose> 
+					<trim prefix="AND">
+				 		<![CDATA[
+				 			rownum <= #{endpage}) X where 
+				 		]]>
+				 	</trim>	
+					<choose>
+						<when test="search=='subject'">
+								 subject like '%' || #{key} || '%'
+						</when>
+						<when test="search=='name'">
+								name like '%' || #{key} || '%'
+						</when>
+						<when test="search=='contents'">
+								contents like '%' || #{key} || '%'
+						</when>
+					</choose> 
+				 	<trim prefix="AND">
+				 		<![CDATA[
+				 			X.rnum >= #{startpage} 
+				 		]]>
+				 	</trim>		
+	</select>
+ -->	
+	<!-- 글 등록 -->
+	<insert id="boardWrite">
+		insert into tbl_board(name, subject, contents, pass)
+					values(#{name}, #{subject}, #{contents}, #{pass})
+	</insert>
+
+	<!-- 조회수 증가  -->
+	<update id="boardHits">
+		update tbl_board set readcnt = readcnt + 1 where idx=#{idx}
+	</update>
+	
+	<!-- 특정글 검색(view, modify) -->
+	<select id="boardSelect" resultSets="com.mnu.domain.BoardDTO">
+		select * from tbl_board where idx = #{idx}
+	</select>
+	
+	<!-- 수정 -->
+	<update id="boardModify">
+		update tbl_board set subject=#{subject}, contents=#{contents}
+				where idx=#{idx} and pass=#{pass}
+	</update>
+	
+	<!-- 삭제 -->
+	<delete id="boardDelete">
+		delete from tbl_board where idx=#{idx} and pass=#{pass}
+	</delete>
+	
+</mapper>
