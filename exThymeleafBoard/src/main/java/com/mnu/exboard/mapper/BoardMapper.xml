@@ -43,7 +43,25 @@
 	<select id="boardList" resultType="com.mnu.exboard.domain.BoardDTO">
 		select * from tbl_board order by idx desc;
 	</select>
-	
+
+	<!-- 글 전체 목록(검색 X, 페이지처리 O) -->
+	<select id="boardListPage" resultType="com.mnu.exboard.domain.BoardDTO">
+		select * from tbl_board 
+ 			     order by idx desc limit #{startpage}, #{maxlist}
+	</select>
+
+	<!-- 전체목록 검색(검색 X, 페이지 O) ORACLE용 -->
+<!-- 
+	<select id="guestListPage" resultType="com.jslhrd.thymeleaf.domain.GuestDTO">
+			<![CDATA[
+				select X.* from (select rownum as rnum, A.* from
+						(select * from tbl_guest order by idx desc) A
+								where rownum <= #{endpage} ) X 
+										where X.rnum >= #{startpage}
+			
+			]]>
+	</select>
+ -->	
 	<!-- 글 전체 목록(검색 O, 페이지처리 O) -->
 	<select id="boardListSearchPage" resultType="com.mnu.exboard.domain.BoardDTO">
 		select * from tbl_board where 

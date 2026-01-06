@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.mnu.exboard.domain.BoardDTO;
+import com.mnu.exboard.domain.PageDTO;
 import com.mnu.exboard.service.BoardService;
+import com.mnu.exboard.util.PageIndex;
 
 @Controller
 @RequestMapping("Board")
@@ -23,14 +25,74 @@ public class BoardController {
 	//서비스 주입
 	@Autowired
 	private BoardService boardService;
-	
-	//전체 목록
+/*	
+	//전체 목록(검색 X, 페이지 X)
 	@RequestMapping("board_list")
 	public String boardList(Model model) {
 		log.info("Call : board_list");
 		
 		model.addAttribute("totcount", boardService.boardCount());
 		model.addAttribute("bList", boardService.boardList());
+		
+		return "/Board/board_list";
+	}
+*/
+	//전체 목록(검색 O, 페이지 O)
+	@RequestMapping("board_list")
+	public String boardList(@RequestParam("page") int page, PageDTO pageDTO, Model model) {
+		log.info("Call : board_list");
+		
+		String url="board_list"; //기본 URL
+		int nowpage=page;			//현재 페이지
+		int maxlist=10;			//페이지당 글수
+		int totpage=1;			//총 페이지
+		
+		int totcount=0;//총 글수 카운트
+		if(pageDTO.getKey()==null) {
+			totcount = boardService.boardCount();//검색없이
+		}else {
+			//검색된 총글수
+			totcount = boardService.boardCountSearch(pageDTO);
+		}
+		//페이지 수 계산
+		if(totcount % maxlist == 0) {
+			totpage = totcount / maxlist;
+		}else {
+			totpage = totcount / maxlist + 1;
+		}
+		//totpage가 0이면 1로 고정
+		if(totpage==0) {
+			totpage=1;
+		}
+/*		//oracle용	
+		//시작 페이지 ,마지막(oracle용) 페이지 계산
+		int startpage = (nowpage-1) * maxlist + 1;
+		int endpage = nowpage * maxlist;
+		int listcount = totcount-((nowpage-1)*maxlist);//일련번호 출력용
+*/		
+		int startpage = (nowpage-1)*maxlist;
+		int listcount = totcount-startpage;//일렵번호 출력용
+		
+		//전달
+		model.addAttribute("page", nowpage);//현재페이지
+		model.addAttribute("totcount", totcount);//총글수
+		model.addAttribute("totpage", totpage);//총페이지
+		model.addAttribute("listcount", listcount);
+		
+		pageDTO.setStartpage(startpage);
+		pageDTO.setMaxlist(maxlist);
+		
+		if(pageDTO.getKey()==null) {
+			model.addAttribute("bList", boardService.boardListPage(pageDTO));
+		}else {
+			model.addAttribute("bList", boardService.boardListSearchPage(pageDTO));
+		}
+		
+		if(pageDTO.getKey()==null) {
+			model.addAttribute("pageList", PageIndex.pageList(nowpage, totpage, url, maxlist));
+		}else {
+			model.addAttribute("pageList", PageIndex.pageListHan(nowpage, totpage, url, maxlist, pageDTO.getSearch(),pageDTO.getKey()));			
+		}
 		
 		return "/Board/board_list";
 	}

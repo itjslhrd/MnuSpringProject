@@ -29,7 +29,12 @@ public class BoardService {
 	public List<BoardDTO> boardList(){
 		return boardMapper.boardList();
 	}
-
+	
+	//글 전체 목록(검색 X, 페이지처리 O)
+	public List<BoardDTO> boardListPage(PageDTO pageDTO){
+		return boardMapper.boardListPage(pageDTO);
+	}
+	
 	//글 전체 목록(검색 O, 페이지처리 O)
 	public List<BoardDTO> boardListSearchPage(PageDTO pageDTO){
 		return boardMapper.boardListSearchPage(pageDTO);	

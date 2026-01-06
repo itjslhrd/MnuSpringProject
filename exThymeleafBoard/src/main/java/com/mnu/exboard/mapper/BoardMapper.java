@@ -19,6 +19,9 @@ public interface BoardMapper {
 	//글 전체 목록(검색, 페이지처리 없음)
 	public List<BoardDTO> boardList();
 	
+	//글 전체 목록(검색 X, 페이지처리 O)
+	public List<BoardDTO> boardListPage(PageDTO pageDTO);
+
 	//글 전체 목록(검색 O, 페이지처리 O)
 	public List<BoardDTO> boardListSearchPage(PageDTO pageDTO);
 	
