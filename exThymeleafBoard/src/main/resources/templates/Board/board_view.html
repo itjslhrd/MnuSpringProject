@@ -52,15 +52,15 @@
       <p align="center">
       <font size="2">
        <!-- 새글쓰기 -->
-       <a th:href="@{board_write(page=1)}">
+       <a th:href="@{board_write(page=${page})}">
        <img src="/img/write.jpg" border="0"></a>&nbsp;&nbsp;
       <!-- 수정하기 -->
-       <a th:href="@{board_modify(idx=${board.idx}, page=1)}">
+       <a th:href="@{board_modify(idx=${board.idx}, page=${page})}">
        <img src="/img/edit.gif" border="0"></a>&nbsp;&nbsp;
          <!-- 삭제하기 -->
        <a th:onclick="|javascript:board_del('${board.idx}','${1}')|"><img src="/img/del.gif" border="0"></a>&nbsp;&nbsp;
        <!-- 목록보기 -->
-       <a th:href="@{board_list(page=1)}"><img src="/img/list-2.gif" border="0"></a>&nbsp;&nbsp;
+       <a th:href="@{board_list(page=${page})}"><img src="/img/list-2.gif" border="0"></a>&nbsp;&nbsp;
       </font>
 
 	<!--  다음에 추가할 부분 -->

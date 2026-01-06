@@ -8,7 +8,7 @@
 	<div th:if="${row==1}">
 		<script>
 			alert("삭제되었습니다");
-			opener.location.replace("board_list?page=1");
+			opener.location.replace("board_list?page=[[${page}]]");
 			self.close();
 		</script>
 	</div>
