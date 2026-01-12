@@ -14,6 +14,11 @@
 		window.open(url,"board_delete","width=300 height=300");
 		
 	}
+	function board_del2(idx, page){
+		url="board_delete?idx="+idx+"&page="+page;
+		window.open(url,"board_delete","width=300 height=300");
+		
+	}
 
 </script>
  </head>
@@ -59,6 +64,8 @@
        <img src="/img/edit.gif" border="0"></a>&nbsp;&nbsp;
          <!-- 삭제하기 -->
        <a th:onclick="|javascript:board_del('${board.idx}','${1}')|"><img src="/img/del.gif" border="0"></a>&nbsp;&nbsp;
+	   <!-- 삭제 button 사용시 -->
+       <button th:onClick="board_del2([[${dto.idx}]],[[${page}]])">[삭제2]</button>
        <!-- 목록보기 -->
        <a th:href="@{board_list(page=${page})}"><img src="/img/list-2.gif" border="0"></a>&nbsp;&nbsp;
       </font>

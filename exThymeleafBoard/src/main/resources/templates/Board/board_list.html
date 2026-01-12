@@ -49,9 +49,9 @@
 				<a class="list" th:href="@{board_view(idx=${board.idx},page=${page})}"><span th:text="${board.subject}"></span></a></td>
 					<td align="center" height="20"><font face="돋움" size="2" th:text="${board.name}">
 					</font></td>
-				<td align="center" height="20"><font face="돋움" size="2" th:text="${board.regdate}"></font></td>
+				<td align="center" height="20"><font face="돋움" size="2" th:text="${#strings.substring(board.regdate,0,10)}"></font></td>
 				<td align="center" height="20"><font face="돋움" size="2" th:text="${board.readcnt}">
-				3</font></td>
+				</font></td>
 		</tr>
 
 

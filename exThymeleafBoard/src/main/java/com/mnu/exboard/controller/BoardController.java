@@ -95,7 +95,7 @@ public class BoardController {
 			model.addAttribute("pageList", PageIndex.pageListHan(nowpage, totpage, url, maxlist, pageDTO.getSearch(),pageDTO.getKey()));			
 		}
 		
-		return "/Board/board_list";
+		return "Board/board_list";
 	}
 	
 	//글 쓰기 폼
@@ -132,7 +132,7 @@ public class BoardController {
 		model.addAttribute("board", boardDTO);
 		
 		//model.addAttribute("board", boardService.boardSelect(idx));
-		return "/Board/board_view";//html 이동
+		return "Board/board_view";//html 이동
 	}
 	
 	//수정 폼
@@ -142,7 +142,7 @@ public class BoardController {
 		BoardDTO boardDTO = boardService.boardSelect(idx);
 		model.addAttribute("board", boardDTO);
 		
-		return "/Board/board_modify";
+		return "Board/board_modify";
 	}
 	
 	//수정처리
@@ -152,7 +152,7 @@ public class BoardController {
 		
 		int row = boardService.boardModify(boardDTO);
 		model.addAttribute("row", row);
-		return "/Board/board_modify_pro";//
+		return "Board/board_modify_pro";//
 	}
 	
 	//삭제 폼
@@ -162,7 +162,7 @@ public class BoardController {
 		
 		model.addAttribute("idx", idx);
 		
-		return "/Board/board_delete";
+		return "Board/board_delete";
 	}
 	
 	//삭제 처리
@@ -172,6 +172,6 @@ public class BoardController {
 				
 		model.addAttribute("row", boardService.boardDelete(boardDTO));
 		
-		return "/Board/board_delete_pro";
+		return "Board/board_delete_pro";
 	}
 }

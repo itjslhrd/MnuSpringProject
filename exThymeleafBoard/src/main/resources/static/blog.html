@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>개인 블로그</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans KR", Arial, sans-serif;
+      background: #f5f6f8;
+      color: #333;
+    }
+    header {
+      background: #1f2937;
+      color: #fff;
+      padding: 20px;
+    }
+    header h1 { font-size: 24px; }
+
+    nav {
+      background: #111827;
+    }
+    nav ul {
+      display: flex;
+      list-style: none;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    nav li {
+      padding: 15px 20px;
+      cursor: pointer;
+      color: #e5e7eb;
+    }
+    nav li:hover, nav li.active {
+      background: #374151;
+      color: #fff;
+    }
+
+    main {
+      max-width: 1100px;
+      margin: 30px auto;
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 20px;
+    }
+
+    section {
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
+
+    section h2 {
+      margin-bottom: 15px;
+      font-size: 20px;
+      border-bottom: 1px solid #e5e7eb;
+      padding-bottom: 8px;
+    }
+
+    .post {
+      margin-bottom: 12px;
+      padding-bottom: 12px;
+      border-bottom: 1px dashed #ddd;
+    }
+
+    .post:last-child { border-bottom: none; }
+
+    aside section {
+      margin-bottom: 20px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: #777;
+      font-size: 14px;
+    }
+
+    /* 반응형 */
+    @media (max-width: 900px) {
+      main {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>나의 개인 블로그</h1>
+    <p>공지 · 포트폴리오 · Q&A · 커뮤니티</p>
+  </header>
+
+  <nav>
+    <ul id="menu">
+      <li class="active" data-page="notice">공지</li>
+      <li data-page="portfolio">포트폴리오</li>
+      <li data-page="qna">질문과 답변</li>
+      <li data-page="member">회원관리</li>
+      <li data-page="free">자유게시판</li>
+    </ul>
+  </nav>
+
+  <main>
+    <section id="content">
+      <!-- 동적 콘텐츠 영역 -->
+    </section>
+
+    <aside>
+      <section>
+        <h2>로그인</h2>
+        <p>아이디, 비밀번호 입력 영역</p>
+      </section>
+      <section>
+        <h2>최근 글</h2>
+        <ul>
+          <li>블로그 오픈 안내</li>
+          <li>포트폴리오 업데이트</li>
+          <li>자주 묻는 질문</li>
+        </ul>
+      </section>
+    </aside>
+  </main>
+
+  <footer>
+    © 2026 개인 블로그. All rights reserved.
+  </footer>
+
+  <script>
+    const pages = {
+      notice: `
+        <h2>공지사항</h2>
+        <div class="post">📢 블로그가 새롭게 오픈했습니다.</div>
+        <div class="post">📢 서버 점검 안내</div>
+      `,
+      portfolio: `
+        <h2>포트폴리오</h2>
+        <div class="post">💼 웹사이트 제작 프로젝트</div>
+        <div class="post">💼 개인 앱 개발</div>
+      `,
+      qna: `
+        <h2>질문과 답변</h2>
+        <div class="post">Q. HTML과 CSS 차이점은?</div>
+        <div class="post">Q. 자바스크립트는 어디에 쓰이나요?</div>
+      `,
+      member: `
+        <h2>회원관리</h2>
+        <div class="post">회원 가입</div>
+        <div class="post">회원 정보 수정</div>
+        <div class="post">회원 목록 (관리자)</div>
+      `,
+      free: `
+        <h2>자유게시판</h2>
+        <div class="post">오늘의 일상 공유</div>
+        <div class="post">개발 잡담</div>
+      `
+    };
+
+    const content = document.getElementById('content');
+    const menuItems = document.querySelectorAll('#menu li');
+
+    function loadPage(page) {
+      content.innerHTML = pages[page];
+      menuItems.forEach(li => li.classList.remove('active'));
+      document.querySelector(`[data-page="${page}"]`).classList.add('active');
+    }
+
+    menuItems.forEach(li => {
+      li.addEventListener('click', () => {
+        loadPage(li.dataset.page);
+      });
+    });
+
+    // 초기 페이지
+    loadPage('notice');
+  </script>
+</body>
+</html>
