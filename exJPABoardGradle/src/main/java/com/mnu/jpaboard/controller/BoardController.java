@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.mnu.jpaboard.dto.BoardRequestDTO;
 import com.mnu.jpaboard.dto.BoardResponseDTO;
@@ -55,4 +56,14 @@ public class BoardController {
 		return "redirect:board_list";//컨트롤로 호출
 	}
 	
+	//idx에 해당하는 글 검색(view)
+	@GetMapping("Board/board_view")
+	public String boardView(@RequestParam("idx") int idx, @ModelAttribute("page") int page, Model model) {
+		BoardResponseDTO board = boardService.boardView(idx);
+		
+		model.addAttribute("board", board);
+		model.addAttribute("newLineChar", "\n");
+		
+		return "Board/board_view";
+	}
 }

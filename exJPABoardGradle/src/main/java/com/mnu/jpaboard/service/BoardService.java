@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.mnu.jpaboard.dto.BoardRequestDTO;
 import com.mnu.jpaboard.dto.BoardResponseDTO;
+import com.mnu.jpaboard.entity.BoardEntity;
 import com.mnu.jpaboard.repository.BoardRepository;
 
 import jakarta.transaction.Transactional;
@@ -44,4 +45,17 @@ public class BoardService {
 		return boardRepository.save(board.toEntity()).getIdx();
 		//등록후 idx 반환
 	}
+	
+	//idx에 해당하는 글 검색(view)
+	public BoardResponseDTO boardView(int idx) {
+		//조회수 증가	
+		boardRepository.boardHits(idx);
+
+		BoardEntity boardEntity = boardRepository.findById(idx)
+				.orElseThrow(()->new IllegalArgumentException("idx없음"));
+		
+		BoardResponseDTO board = new BoardResponseDTO(boardEntity);
+		return board;
+	}
+	
 }

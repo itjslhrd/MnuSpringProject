@@ -28,8 +28,6 @@ public class BoardEntity {
 	private String pass;//비번
 	private String subject;//제목
 	private String contents;//내용
-	//private LocalDateTime regdate =  
-	//                 LocalDateTime.now() ;//등록일
 	@Column(nullable = false, updatable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
 	private String regdate; //등록일
 	//private String updategdate;//수정일
