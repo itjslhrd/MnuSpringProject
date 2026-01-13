@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<span th:if="${row==1}">
+		<script>
+			alert("삭제완료");
+			opener.location.replace("/Board/board_list?page=[[${page}]]");
+			self.close();//팝업창 닫기
+		</script>
+	</span>
+	<span th:if="${row==0}">
+		<script>
+			alert("비번오류");
+			history.back();
+		</script>
+	</span>
+	
+</body>
+</html>

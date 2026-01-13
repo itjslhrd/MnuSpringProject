@@ -82,4 +82,19 @@ public class BoardController {
 		return "Board/board_modify_pro";
 	}
 	
+	//삭제 폼(비번입력)
+	@GetMapping("Board/board_delete")
+	public String boardDelete(@ModelAttribute("idx") int idx, @ModelAttribute("page") int page) {
+		
+		return "Board/board_delete";
+	}
+	
+	//삭제처리
+	@PostMapping("Board/board_delete")
+	public String boardDeletePro(@RequestParam("idx") int idx, @RequestParam("pass") String pass,
+						@ModelAttribute("page") int page, Model model) {
+		int row = boardService.boardDelete(idx, pass);
+		model.addAttribute("row", row);
+		return "Board/board_delete_pro";
+	}
 }

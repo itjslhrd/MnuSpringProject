@@ -72,4 +72,9 @@ public class BoardService {
 		int row = boardRepository.boardModify(idx, board.getSubject(), board.getContents(), board.getPass());
 		return row;
 	}
+	
+	//삭제처리
+	public int boardDelete(int idx, String pass) {
+		return boardRepository.boardDelete(idx, pass);
+	}
 }

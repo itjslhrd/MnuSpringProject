@@ -27,5 +27,10 @@ public interface BoardRepository extends JpaRepository<BoardEntity, Integer> {
 	@Query("update BoardEntity board set board.subject= :subject, board.contents= :contents where board.idx= :idx and board.pass= :pass")
 	int boardModify(@Param("idx") int idx, @Param("subject") String subject, @Param("contents") String contents, @Param("pass") String pass);
 	
+	//삭제(idx, pass)
+	@Transactional
+	@Modifying
+	@Query("delete from BoardEntity board where board.idx= :idx and board.pass= :pass")
+	int boardDelete(@Param("idx") int idx, @Param("pass") String pass);
 	
 }
