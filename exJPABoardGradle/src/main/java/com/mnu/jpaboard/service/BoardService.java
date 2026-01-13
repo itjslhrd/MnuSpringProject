@@ -57,5 +57,19 @@ public class BoardService {
 		BoardResponseDTO board = new BoardResponseDTO(boardEntity);
 		return board;
 	}
+
+	//idx에 해당하는 글 검색(modify)
+	public BoardResponseDTO boardModify(int idx) {
+		BoardEntity boardEntity = boardRepository.findById(idx)
+				.orElseThrow(()->new IllegalArgumentException("idx없음"));
+		
+		BoardResponseDTO board = new BoardResponseDTO(boardEntity);
+		return board;
+	}
 	
+	//수정처리
+	public int boardModifyPro(int idx, BoardRequestDTO board) {
+		int row = boardRepository.boardModify(idx, board.getSubject(), board.getContents(), board.getPass());
+		return row;
+	}
 }

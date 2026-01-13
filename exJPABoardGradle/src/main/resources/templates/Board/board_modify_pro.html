@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<span th:if="${row==1}">
+		<script>
+			alert("수정완료");
+			location.href="/Board/board_list?page=[[${page}]]"
+		</script>
+	</span>
+	<span th:if="${row==0}">
+		<script>
+			alert("비번오류");
+			history.back();
+		</script>
+	</span>
+	
+</body>
+</html>

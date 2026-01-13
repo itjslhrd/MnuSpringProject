@@ -66,4 +66,20 @@ public class BoardController {
 		
 		return "Board/board_view";
 	}
+	
+	//수정폼
+	@GetMapping("Board/board_modify")
+	public String boardModify(@RequestParam("idx") int idx, 
+					@ModelAttribute("page") int page, Model model) {
+		model.addAttribute("board", boardService.boardModify(idx));
+		return "Board/board_modify";
+	}
+	//수정처리
+	@PostMapping("Board/board_modify")
+	public String boardModifyPro(@RequestParam("idx") int idx, 
+					@ModelAttribute("page") int page, BoardRequestDTO board, Model model) {
+		model.addAttribute("row", boardService.boardModifyPro(idx, board));
+		return "Board/board_modify_pro";
+	}
+	
 }
