@@ -1,7 +1,9 @@
 package com.mnu.jpaboard.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -55,6 +57,7 @@ public class BoardController {
 		return "Board/board_list";
 	}
 */
+/*	
 	//전체 + 검색기능 + Page을 get통합 
 	@GetMapping("Board/board_list")
 	public String boardListSearchPage(@RequestParam(value="search", required = false) String search, 
@@ -72,7 +75,21 @@ public class BoardController {
 		model.addAttribute("key", key);
 		return "Board/board_list";
 	}
+*/
+	//전체 + 검색기능 + Page을 get통합 
+	@GetMapping("Board/board_list")
+	public String boardListSearchPage(@RequestParam(value="search", required = false) String search, 
+			@RequestParam(value="key", required = false) String key, 
+			@PageableDefault(size=10, sort="idx", direction = Sort.Direction.DESC) Pageable pageable,Model model) {
 
+		Page<BoardResponseDTO> result =
+                boardService.boardListSearchPage(search, key, pageable);
+		model.addAttribute("bList", result);
+		model.addAttribute("search", search);
+		model.addAttribute("key", key);
+		return "Board/board_list";
+	}
+	
 	//등록폼
 	@GetMapping("Board/board_write")
 	public String boardWrite(Model model) {

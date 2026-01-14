@@ -59,4 +59,11 @@ public interface BoardRepository extends JpaRepository<BoardEntity, Integer> {
 	Page<BoardEntity> findBySubjectContainingOrderByIdxDesc(String keyword, Pageable pageable);
 	Page<BoardEntity> findByContentsContainingOrderByIdxDesc(String keyword, Pageable pageable);
 	
+	//검색(이름,제목,내용) + PageIndexing
+	@Query("select board from BoardEntity board "
+			+ " where (:search = 'name' and board.name like %:key%) "
+			+ " or (:search = 'subject' and board.subject like %:key%) "
+			+ " or (:search = 'contents' and board.contents like %:key%)")
+	Page<BoardEntity> boardListSearchPage(@Param("search") String search, @Param("key") String key, Pageable pageable);
+	
 }

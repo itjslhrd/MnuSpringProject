@@ -86,7 +86,7 @@ public class BoardService {
     		return null;
     	}
     }
-
+/*
     //조건(이름,제목, 내용)에 맞는 글 검색 + Page
     @Transactional
     public Page<BoardResponseDTO> boardListSearchPage(String search, String key, Pageable pageable){
@@ -105,8 +105,21 @@ public class BoardService {
     		return null;
     	}
     }
-    
-	//등록처리
+ */   
+    //조건(이름,제목,내용)에 맞는 글 검색 + Page
+    //@Query() 이용시
+    @Transactional
+    public Page<BoardResponseDTO> boardListSearchPage(String search, String key, Pageable pageable){
+    	Page<BoardEntity> page;
+    	if(key != null && !key.equals("")) {
+    		page = boardRepository.boardListSearchPage(search, key, pageable);
+    	}else {
+    		page = boardRepository.findAll(pageable);
+    	}
+    	return page.map(BoardResponseDTO::new);
+    }
+
+    //등록처리
 	@Transactional
 	public int boardWrite(BoardRequestDTO board) {
 		return boardRepository.save(board.toEntity()).getIdx();
