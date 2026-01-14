@@ -3,7 +3,8 @@ package com.mnu.jpaboard.service;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.mnu.jpaboard.dto.BoardRequestDTO;
@@ -43,6 +44,7 @@ public class BoardService {
 		return boardRepository.findAll(Sort.by(Sort.Direction.DESC,"idx"));//기본키 내림차순
 	}
 */
+/*	
 	//전체목록 검색
 	@Transactional
 	public List<BoardResponseDTO> boardList(){
@@ -51,7 +53,16 @@ public class BoardService {
 				.map(BoardResponseDTO::new)
 				.collect(Collectors.toList());
 	}
-
+*/
+	//전체목록 검색 + page
+	@Transactional
+	public Page<BoardResponseDTO> boardList(Pageable pageable){
+		Page<BoardEntity> page;
+		page = boardRepository.findAll(pageable);
+		
+		return page.map(BoardResponseDTO::new);
+	}
+	
     //조건(이름,제목, 내용)에 맞는 글 검색
     @Transactional
     public List<BoardResponseDTO> boardListSearch(String search, String key){
@@ -75,7 +86,26 @@ public class BoardService {
     		return null;
     	}
     }
-	
+
+    //조건(이름,제목, 내용)에 맞는 글 검색 + Page
+    @Transactional
+    public Page<BoardResponseDTO> boardListSearchPage(String search, String key, Pageable pageable){
+    	Page<BoardEntity> page;
+    	switch(search) {
+    	case "name":
+    		page = boardRepository.findByNameContainingOrderByIdxDesc(key, pageable);
+    		return page.map(BoardResponseDTO::new);
+    	case "subject":
+    		page = boardRepository.findBySubjectContainingOrderByIdxDesc(key, pageable);
+    	    return page.map(BoardResponseDTO::new);
+    	case "contents":
+    		page = boardRepository.findByContentsContainingOrderByIdxDesc(key, pageable);
+    		return page.map(BoardResponseDTO::new);
+    	default:
+    		return null;
+    	}
+    }
+    
 	//등록처리
 	@Transactional
 	public int boardWrite(BoardRequestDTO board) {

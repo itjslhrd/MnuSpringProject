@@ -2,6 +2,8 @@ package com.mnu.jpaboard.repository;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -42,15 +44,19 @@ public interface BoardRepository extends JpaRepository<BoardEntity, Integer> {
 
 	//검색(이름, 제목, 내용)-> 오름차순
 	List<BoardEntity> findByNameContaining(String keyword);
-	//name like '%keyword%';
+	//findByNameContaining(name like '%keyword%');
 	List<BoardEntity> findBySubjectContaining(String keyword);
 	List<BoardEntity> findByContentsContaining(String keyword);
 	
-	//검색(이름, 제목, 내용)-> idx 기준 내림차순
+	//검색(이름, 제목, 내용)-> idx기준 내림차순
 	List<BoardEntity> findByNameContainingOrderByIdxDesc(String keyword);
-	//name like '%keyword%';
+	//findByNameContaining(name like '%keyword%');
 	List<BoardEntity> findBySubjectContainingOrderByIdxDesc(String keyword);
 	List<BoardEntity> findByContentsContainingOrderByIdxDesc(String keyword);
 
-
+	//검색(이름,제목,내용) + PageIndexing
+	Page<BoardEntity> findByNameContainingOrderByIdxDesc(String keyword, Pageable pageable);
+	Page<BoardEntity> findBySubjectContainingOrderByIdxDesc(String keyword, Pageable pageable);
+	Page<BoardEntity> findByContentsContainingOrderByIdxDesc(String keyword, Pageable pageable);
+	
 }
