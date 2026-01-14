@@ -9,7 +9,16 @@
 <style type="text/css">
   a.list {text-decoration:none;color:black;font-size:10pt;}
 </style>
-
+<script>
+	function board_search(){
+		if(!board.key.value){
+			alert("검색어를 입력하세요");
+			board.key.focus();
+			return;
+		}
+		board.submit();
+	}
+</script>
 </head>
 <body bgcolor="#FFFFFF" topmargin="0" leftmargin="0">
 <table border="0" width="800">
@@ -47,7 +56,7 @@
 				<a class="list" th:href="@{/Board/board_view(idx=${board.idx},page=1)}" th:text="${board.subject}"></a></td>
 					<td align="center" height="20"><font face="돋움" size="2">
 					<a class="list" href="mailto:ein1027@nate.com" th:text="${board.name}"></a></font></td>
-				<td align="center" height="20"><font face="돋움" size="2" th:text="${board.regdate}"></font></td>
+				<td align="center" height="20"><font face="돋움" size="2" th:text="${#strings.substring(board.regdate,0,10)}"></font></td>
 				<td align="center" height="20"><font face="돋움" size="2" th:text="${board.readcnt}"></font></td>
 		</tr>
 		
@@ -67,18 +76,18 @@
 			<td width="25%"> &nbsp;</td>
 			<td width="50%" align="center">
 				<table>
-					<form>	
+					<form name="board" method="get" action="/Board/board_list">	
 					<!-- 검색어를 이용하여 글제목, 작성자, 글내용 중에 하나를 입력 받아 처리하기 위한 부분 -->
 						<tr>
 							<td>
 								<select name="search">
-									<option value="">글제목</option>
-									<option value="">작성자</option>
-									<option value="">글내용</option>
+									<option value="subject" th:selected="${search=='subject'}">글제목</option>
+									<option value="name" th:selected="${search=='name'}">작성자</option>
+									<option value="contents" th:selected="${search=='contents'}">글내용</option>
 								</select>
 							</td>
-							<td> <input type="text" size=20 name=""></td>
-							<td> <a href="#"><img src="/img/search2.gif" border="0"></a></td>
+							<td> <input type="text" size=20 name="key" th:value="${key}"></td>
+							<td> <a href="javascript:board_search()"><img src="/img/search2.gif" border="0"></a></td>
 						</tr>
 					</form>
 				</table>

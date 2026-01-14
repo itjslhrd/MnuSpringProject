@@ -1,5 +1,7 @@
 package com.mnu.jpaboard.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -32,5 +34,23 @@ public interface BoardRepository extends JpaRepository<BoardEntity, Integer> {
 	@Modifying
 	@Query("delete from BoardEntity board where board.idx= :idx and board.pass= :pass")
 	int boardDelete(@Param("idx") int idx, @Param("pass") String pass);
+
+	//검색(이름, 제목, 내용) 카운트
+	long countByNameContaining(String keyword);
+	long countBySubjectContaining(String keyword);
+	long countByContentsContaining(String keyword);
+
+	//검색(이름, 제목, 내용)-> 오름차순
+	List<BoardEntity> findByNameContaining(String keyword);
+	//name like '%keyword%';
+	List<BoardEntity> findBySubjectContaining(String keyword);
+	List<BoardEntity> findByContentsContaining(String keyword);
 	
+	//검색(이름, 제목, 내용)-> idx 기준 내림차순
+	List<BoardEntity> findByNameContainingOrderByIdxDesc(String keyword);
+	//name like '%keyword%';
+	List<BoardEntity> findBySubjectContainingOrderByIdxDesc(String keyword);
+	List<BoardEntity> findByContentsContainingOrderByIdxDesc(String keyword);
+
+
 }

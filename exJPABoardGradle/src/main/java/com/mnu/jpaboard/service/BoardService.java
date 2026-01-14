@@ -23,6 +23,19 @@ public class BoardService {
 	public long boardCount() {
 		return boardRepository.count();
 	}
+
+	public long boardCountSearch(String search, String key) {
+    	switch(search) {
+    	case "name":
+    		return boardRepository.countByNameContaining(key);
+    	case "subject":
+    		return boardRepository.countBySubjectContaining(key);
+    	case "contents":
+    		return boardRepository.countByContentsContaining(key);
+    	default:
+    		return 0;
+    	}
+	}
 	
 /*	//전체목록 검색
 	public List<BoardEntity> boardList(){
@@ -38,6 +51,30 @@ public class BoardService {
 				.map(BoardResponseDTO::new)
 				.collect(Collectors.toList());
 	}
+
+    //조건(이름,제목, 내용)에 맞는 글 검색
+    @Transactional
+    public List<BoardResponseDTO> boardListSearch(String search, String key){
+    	switch(search) {
+    	case "name":
+    		return boardRepository.findByNameContainingOrderByIdxDesc(key)
+    				.stream()
+    				.map(BoardResponseDTO::new)
+    				.collect(Collectors.toList());
+    	case "subject":
+    		return boardRepository.findBySubjectContainingOrderByIdxDesc(key)
+    				.stream()
+    				.map(BoardResponseDTO::new)
+    				.collect(Collectors.toList());
+    	case "contents":
+    		return boardRepository.findByContentsContainingOrderByIdxDesc(key)
+    				.stream()
+    				.map(BoardResponseDTO::new)
+    				.collect(Collectors.toList());
+    	default:
+    		return null;
+    	}
+    }
 	
 	//등록처리
 	@Transactional

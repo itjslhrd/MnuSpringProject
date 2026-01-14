@@ -5,7 +5,12 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
     <link rel="stylesheet" type="text/css" href="/css/stylesheet.css">
-
+<script>
+	function notice_send(){
+		alert("등록합니다");
+		notice.submit();
+	}
+</script>
 </head>
  <body topmargin="0" leftmargin="0">
  <table border="0" width="800">
@@ -22,14 +27,14 @@
      <font size="2"> - 글쓰기</font><p>
      <img src="/img/bullet-03.gif"><font size="2" face="돋움" color="orange"> 잠깐</font> &nbsp;
      <img src="/img/bullet-02.gif"><font size="2" face="돋움">는 필수 입력 사항입니다.</font><p>
-     <form method="post">
+     <form name="notice" method="post" action="/Notice/notice_write">
 
 	  <table border="0">
        <tr>
          <td width="5%" align="right"><img src="/img/bullet-02.gif"></td>
          <td width="15%"><font size="2" face="돋움">글쓴이</font></td>
          <td width="80%">
-         <input type="text" size="20" name="name"></td>
+         <input type="text" size="20" name="name" value="관리자"></td>
        </tr>
 	   <tr>
          <td align="right"><img src="/img/bullet-02.gif"></td>
@@ -46,8 +51,8 @@
           <td align="right">&nbsp;</td>
           <td><font size="2">&nbsp;</font></td>
           <td>
-             <a href="#"><img src="/img/save.gif" border=0></a>&nbsp;&nbsp;&nbsp;
-             <a href="#"><img src="/img/cancle.gif" border=0></a>
+             <a href="javascript:notice_send()"><img src="/img/save.gif" border=0></a>&nbsp;&nbsp;&nbsp;
+             <a href="javascript:history.back()"><img src="/img/cancle.gif" border=0></a>
           </td>
         </tr>
       </table>

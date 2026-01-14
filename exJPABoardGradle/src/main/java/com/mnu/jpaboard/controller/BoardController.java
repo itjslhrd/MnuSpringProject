@@ -16,11 +16,39 @@ import com.mnu.jpaboard.service.BoardService;
 public class BoardController {
 	@Autowired
 	private BoardService boardService;
-	
+/*	
 	@GetMapping("Board/board_list")
 	public String boardList(Model model) {
 		model.addAttribute("totcount", boardService.boardCount());
 		model.addAttribute("bList", boardService.boardList());
+		return "Board/board_list";
+	}
+*/
+/*	
+	@PostMapping("Board/board_list")
+	public String boardListSearch(@RequestParam("search") String search, 
+			@RequestParam("key") String key, Model model) {
+		model.addAttribute("totcount", boardService.boardCountSearch(search, key));
+		model.addAttribute("bList", boardService.boardListSearch(search, key));
+		
+		return "Board/board_list";
+	}
+*/
+	//전체 + 검색기능을 get통합 
+	@GetMapping("Board/board_list")
+	public String boardListSearch(@RequestParam(value="search", required = false) String search, 
+			@RequestParam(value="key", required = false) String key, Model model) {
+		if(search!=null && !search.isEmpty()) {
+			//검색일 경우
+			model.addAttribute("totcount", boardService.boardCountSearch(search, key));
+			model.addAttribute("bList", boardService.boardListSearch(search, key));
+		}else {
+			//검색이 아닐경우
+			model.addAttribute("totcount", boardService.boardCount());
+			model.addAttribute("bList", boardService.boardList());			
+		}
+		model.addAttribute("search", search);
+		model.addAttribute("key", key);
 		return "Board/board_list";
 	}
 	
