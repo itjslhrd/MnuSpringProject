@@ -112,8 +112,10 @@ public class BoardService {
     public Page<BoardResponseDTO> boardListSearchPage(String search, String key, Pageable pageable){
     	Page<BoardEntity> page;
     	if(key != null && !key.equals("")) {
+    		//검색 O
     		page = boardRepository.boardListSearchPage(search, key, pageable);
     	}else {
+    		//검색 X
     		page = boardRepository.findAll(pageable);
     	}
     	return page.map(BoardResponseDTO::new);
