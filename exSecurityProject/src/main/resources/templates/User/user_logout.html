@@ -1,0 +1,52 @@
+<th:block th:replace="~{Include/topmenu}"></th:block>
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>회원등록</title>
+<STYLE TYPE="text/css">
+<!--
+body { font-family: 돋움, Verdana; font-size: 9pt}
+td   { font-family: 돋움, Verdana; font-size: 9pt; text-decoration: none; color: #000000; BACKGROUND-POSITION: left top; BACKGROUND-REPEAT: no-repeat;}
+-->
+.formbox {
+	BACKGROUND-COLOR: #F0F0F0; FONT-FAMILY: "Verdana", "Arial", "Helvetica", "돋움"; FONT-SIZE:9pt
+} 
+
+</STYLE>
+<link rel="stylesheet" type="text/css" href="/css/stylesheet.css">
+
+
+</head>
+
+<body bgcolor="#FFFFFF" LEFTMARGIN=0  TOPMARGIN=0 >
+ 
+ <!-- 탑 메뉴 영역 삽입-->
+
+
+<table border="0" width="800">
+<tr>
+  <td width="20%"  bgcolor="#ecf1ef" valign="top" style="padding-left:0;">
+	
+	<!--로그인 영역 삽입-->
+
+  </td>
+  <td width="80%" valign="top">&nbsp;<img src="/img/title1.gif" ><br>    
+	<table border=0 cellpadding=0 cellspacing=0 width=730 valign=top>
+		<tr>
+			<td align=center>     
+			<form th:action="@{/User/user_logout}" method="post">
+    		<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+    			<button type="submit">로그아웃</button>
+			</form>                       
+			</td>
+		</tr>
+	</table>
+  </td>
+  </tr>
+</table>
+ <!-- copyright 영역 삽입-->
+  
+
+</body>
+</html>

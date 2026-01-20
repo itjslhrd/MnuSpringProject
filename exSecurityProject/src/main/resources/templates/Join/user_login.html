@@ -47,7 +47,8 @@ td   { font-family: 돋움, Verdana; font-size: 9pt; text-decoration: none; colo
   <TD width=100>&nbsp;</td>
   <TD>
     <table width="583" border="0" cellspacing="0" cellpadding="0" height="265">
-	  <form id=user name="user" method=post action="/User/user_login" onSubmit="return send()">
+	  <form id=user name="user" method=post th:action="@{/Join/user_login}" onSubmit="return send()">
+	  <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
 	    <tr>
 		  <td height="298"> 
 		    <table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -86,8 +87,8 @@ td   { font-family: 돋움, Verdana; font-size: 9pt; text-decoration: none; colo
 						</td>
 					  </tr>
 					  <!-- 로그인 에러시 -->
-					  <tr th:if="${errorMessage}" align=CENTER style="color:red;">
-    					<td th:text="${errorMessage}"></td>
+					  <tr th:if="${param.errorMessage}" align=CENTER style="color:red;">
+    					<td th:text="${param.errorMessage}"></td>
 					  </tr>
 					  
 					  <tr bgcolor="#FFFFFF"> 

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mnu.excurity.dto.UserRequestDTO;
-import com.mnu.excurity.service.UserService;
+import com.mnu.excurity.service.CustomUserDetailsService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -18,7 +18,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UserController {
 	//주입
-	private final UserService userService;
+	private final CustomUserDetailsService userService;
 	private final PasswordEncoder encoder;//비번 암호화 빈
 /*
 	//회원가입폼
@@ -46,18 +46,18 @@ public class UserController {
 	//본인확인(SMS)
 	
 	//회원가입처리
-	@PostMapping("/Join/user_insert")
+	@PostMapping("Join/user_insert")
 	public String userInsertPro(UserRequestDTO userRequestDTO, Model model) {
 		userService.userInsertPro(userRequestDTO);
 		return "Join/user_login";//로그인 폼으로 이동
 	}
+	
 	//로그인 폼
 	@GetMapping("Join/user_login")
 	public String userLogin() {
 		return "Join/user_login";
 	}
-	
-	//로그인처리
+	//로그인처리는 시큐리티가 알아서 처리하므로 생략
 	
 	//마이페이지
 	@GetMapping("User/user_mypage")
@@ -65,11 +65,17 @@ public class UserController {
 		return "User/user_mypage";
 	}
 
+	//마이페이지
+	@GetMapping("User/user_modify")
+	public String userModify() {
+		return "User/user_modify";
+	}
+
 	//로그아웃처리
 	@GetMapping("User/user_logout")
 	public String userLogout() {
 		
-		return "redirect:/";
+		return "User/user_logout";
 	}
 
 }
