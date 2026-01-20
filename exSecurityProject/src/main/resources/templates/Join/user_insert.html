@@ -1,3 +1,5 @@
+<th:block th:replace="~{Include/topmenu}"></th:block>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -6,17 +8,18 @@
 <!--
 body { font-family: 돋움, Verdana; font-size: 9pt}
 td   { font-family: 돋움, Verdana; font-size: 9pt; text-decoration: none; color: #000000; BACKGROUND-POSITION: left top; BACKGROUND-REPEAT: no-repeat;}
--->
+
 .formbox {
 	BACKGROUND-COLOR: #F0F0F0; FONT-FAMILY: "Verdana", "Arial", "Helvetica", "돋움"; FONT-SIZE:9pt
 } 
---->
-<link rel="stylesheet" type="text/css" href="/css/stylesheet.css">
+
 </STYLE>
+<link rel="stylesheet" type="text/css" href="/css/stylesheet.css">
+
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> 
 <script type="text/javascript">
 $(function(){
-	$(#smscheck).hide();
+	
 	
 	
 });
@@ -30,10 +33,10 @@ $(function(){
 
 <table border="0" width="800">
 <tr>
-  <td width="20%"  bgcolor="#ecf1ef" valign="top" style="padding-left:0;">
+  <td width="20%"  bgcolor="#ecf1ef" valign="top" style="padding-left:0">
 	
 	<!--로그인 영역 삽입-->
-
+	<th:block th:replace="~{Include/login_form}">
   </td>
   <td width="80%" valign="top">&nbsp;<img src="/img/title1.gif" ><br>    
 	<form name="user" method=post action="user_insert">

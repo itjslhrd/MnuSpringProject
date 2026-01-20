@@ -17,7 +17,9 @@ A:hover {font-family:tahoma;font-size:9pt;color:#009900;text-decoration:underlin
 
 <body>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
-	<tr><td><jsp:include page="top_menu.jsp" flush="true" /></td></tr>
+	<tr><td>
+		<th:block th:replace="~{Admin/top_menu}">
+		</td></tr>
 	<tr>
 		<td align="center" height="100%" valign=middle><br>
 			<table width="30%" border="1" cellspacing="0" cellpadding="3" bgcolor="#FFCC66" bordercolor="#FFFFFF" bordercolorlight="#000000">

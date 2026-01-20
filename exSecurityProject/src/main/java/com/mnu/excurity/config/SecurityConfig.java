@@ -19,7 +19,7 @@ public class SecurityConfig {
 				.anyRequest().permitAll()//누구나
 				)
 				.formLogin(login->login
-						.loginPage("/Join/login")
+						.loginPage("/Join/user_login")
 						.defaultSuccessUrl("/")//로그인 성공시 이동 페이지
 						)
 				.logout(logout->logout
