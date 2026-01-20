@@ -12,6 +12,23 @@ td   { font-family: 돋움, Verdana; font-size: 9pt; text-decoration: none; colo
       BACKGROUND-POSITION: left top; BACKGROUND-REPEAT: no-repeat;}
 -->
 </STYLE>
+<script>
+	function send(){
+		if(user.userid.value == ""){
+			alert("아이디를 입력하세요");
+			user.userid.focus();
+			return false;
+		}
+		if(user.passwd.value == ""){
+			alert("비밀번호를 입력하세요");
+			user.passwd.focus();
+			return false;
+		}
+		
+	}
+
+</script>
+
 </HEAD>
 <body bgcolor="#FFFFFF" text="#000000" leftmargin=0 
   topmargin=0 onLoad='document.user.userid.focus();'>
@@ -20,8 +37,9 @@ td   { font-family: 돋움, Verdana; font-size: 9pt; text-decoration: none; colo
 <tr>
   <td width="20%"  bgcolor="#ecf1ef" valign="top" style="padding-left:0;">
 
-	<!--로그인 영역 삽입--> 
-	<th:block th:replace="~{Include/login_form}">
+	<!-- 다음에 추가할 부분 -->
+	<th:block th:replace="~{Include/login_form}"></th:block>
+
   </td>
   <td width="80%" valign="top">&nbsp;<img src="/img/title1.gif" ><br>    
 <TABLE width="683" border="0" cellspacing="0" cellpadding="0" height="265">
@@ -29,7 +47,7 @@ td   { font-family: 돋움, Verdana; font-size: 9pt; text-decoration: none; colo
   <TD width=100>&nbsp;</td>
   <TD>
     <table width="583" border="0" cellspacing="0" cellpadding="0" height="265">
-	  <form name=fname method=post >
+	  <form id=user name="user" method=post action="/User/user_login" onSubmit="return send()">
 	    <tr>
 		  <td height="298"> 
 		    <table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -67,6 +85,11 @@ td   { font-family: 돋움, Verdana; font-size: 9pt; text-decoration: none; colo
 						  </table>
 						</td>
 					  </tr>
+					  <!-- 로그인 에러시 -->
+					  <tr th:if="${errorMessage}" align=CENTER style="color:red;">
+    					<td th:text="${errorMessage}"></td>
+					  </tr>
+					  
 					  <tr bgcolor="#FFFFFF"> 
 						<td bgcolor="#ffffff" align=CENTER height="138"> 
 							[아이디찾기] &nbsp;&nbsp; [비밀번호찾기]
@@ -90,7 +113,7 @@ td   { font-family: 돋움, Verdana; font-size: 9pt; text-decoration: none; colo
 							        <td> 
 							          <p style="LINE-HEIGHT:15PX;"><font color="#AFAFB1">아이디가 
 								      없으신 분은 
-							          <font color="#ff7508">이용자가입</font>을 하시기 바랍니다.<br>
+							          <font color="#ff7508"><a href="/User/user_insert">[회원(이용자)가입]</a></font>을 하시기 바랍니다.<br>
 							            <br>
 							            <br>
 							          </p>

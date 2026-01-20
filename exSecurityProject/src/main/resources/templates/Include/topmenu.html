@@ -18,21 +18,25 @@
        </b></font>
      </td>
      <td bgcolor="#9966ff" width="10%" height="25" onmouseover="style.backgroundColor='#2772D3'" onmouseout="style.backgroundColor=''">
-     <p align="center"><font color="white" size="2"><b><a href="/Users/user_login.jsp" class="white">로그인</A></b></font></p>
-     <p align="center"><font color="white" size="2"><b><a href="" class="white">로그아웃</A></b></font></p>
+     <!-- 권한이 없는 익명의 사용자일 경우 -->
+     <p align="center" sec:authorize="isAnonymous()"><font color="white" size="2"><b><a href="/Join/user_login" class="white">로그인</A></b></font></p>
+     <!-- 권한에 관계없이 로그인 인증을 받은 경우 -->
+     <p align="center" sec:authorize="isAuthenticated()"><font color="white" size="2"><b><a href="/User/user_logout" class="white">로그아웃</A></b></font></p>
      </td>
      <td bgcolor="#9966ff" width="10%" onmouseover="style.backgroundColor='#2772D3'" onmouseout="style.backgroundColor=''">
-     <p align="center"><font color="white" size="2"><b><a href="/Users/user_insert.jsp" class="white">회원가입</a></b></font></p>
-     <p align="center"><font color="white" size="2"><b><a href="/Users/user_modify.jsp" class="white">정보수정</a></b></font></p>
+     <!-- 권한이 없는 익명의 사용자일 경우 -->
+     <p align="center" sec:authorize="isAnonymous()"><font color="white" size="2"><b><a href="/Join/user_insert" class="white">회원가입</a></b></font></p>
+     <!-- 권한에 관계없이 로그인 인증을 받은 경우 -->
+     <p align="center" sec:authorize="isAuthenticated()"><font color="white" size="2"><b><a href="/User/user_modify" class="white">마이페이지</a></b></font></p>
      </td>
      <td bgcolor="#9966ff" width="10%" onmouseover="style.backgroundColor='#2772D3'" onmouseout="style.backgroundColor=''">
-     <p align="center"><font color="white" size="2"><b><a href="/Notice/notice_list.jsp" class="white">공지사항</a></b></font></p>
+     <p align="center"><font color="white" size="2"><b><a href="/Notice/notice_list" class="white">공지사항</a></b></font></p>
      </td>
      <td bgcolor="#9966ff" width="10%" onmouseover="style.backgroundColor='#2772D3'" onmouseout="style.backgroundColor=''">
      <p align="center"><font color="white" size="2"><b><a th:href="@{/Board/board_list(page=1)}" class="white">자유게시판</a></b></font></p>
      </td>
      <td bgcolor="#9966ff" width="10%" onmouseover="style.backgroundColor='#2772D3'" onmouseout="style.backgroundColor=''">
-     <p align="center"><font color="white" size="2"><b><a href="/BoardPhoto/board_list.jsp" class="white">포토게시판</a></b></font></p>
+     <p align="center"><font color="white" size="2"><b><a href="/BoardPhoto/board_list" class="white">포토게시판</a></b></font></p>
      </td>
      <td bgcolor="#9966ff" width="10%" onmouseover="style.backgroundColor='#2772D3'" onmouseout="style.backgroundColor=''">
      <p align="center"><font color="white" size="2"><b><a href="/Pds/pds_list.jsp" class="white">자료실</a></b></font></p>
