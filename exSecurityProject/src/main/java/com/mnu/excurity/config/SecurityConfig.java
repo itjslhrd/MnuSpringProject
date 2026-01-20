@@ -18,6 +18,7 @@ public class SecurityConfig {
 				.requestMatchers("/User/**").hasRole("User")
 				.anyRequest().permitAll()//누구나
 				)
+				//.csrf().disable()
 				.formLogin(login->login
 						.loginPage("/Join/user_login")
 						.defaultSuccessUrl("/")//로그인 성공시 이동 페이지
@@ -34,5 +35,13 @@ public class SecurityConfig {
    public PasswordEncoder passwordEncoder() {
       return new BCryptPasswordEncoder(); 
    }
+
+   /*
+	//비번 암호화
+   @Bean
+   public BCryptPasswordEncoder bCryptPasswordEncoder() {
+        return new BCryptPasswordEncoder();
+   }
+   */
 
 }

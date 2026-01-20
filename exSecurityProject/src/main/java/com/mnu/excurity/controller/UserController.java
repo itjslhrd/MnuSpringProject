@@ -2,11 +2,14 @@ package com.mnu.excurity.controller;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.mnu.excurity.dto.UserRequestDTO;
 import com.mnu.excurity.service.UserService;
 
 import lombok.RequiredArgsConstructor;
@@ -17,9 +20,18 @@ public class UserController {
 	//주입
 	private final UserService userService;
 	private final PasswordEncoder encoder;//비번 암호화 빈
+/*
+	//회원가입폼
+	@GetMapping("Join/user_insert")
+	public String userInsert(Model model) {
+		model.addAttribute("userDTO", new UserRequestDTO());
+		return "Join/user_insert";
+	}
+*/	
 	//회원가입폼
 	@GetMapping("Join/user_insert")
 	public String userInsert() {
+		
 		return "Join/user_insert";
 	}
 	//아이디 중복검사
@@ -31,10 +43,14 @@ public class UserController {
 		return String.valueOf(row);
 	}
 	
-	//본인확인
+	//본인확인(SMS)
 	
 	//회원가입처리
-	
+	@PostMapping("/Join/user_insert")
+	public String userInsertPro(UserRequestDTO userRequestDTO, Model model) {
+		userService.userInsertPro(userRequestDTO);
+		return "Join/user_login";//로그인 폼으로 이동
+	}
 	//로그인 폼
 	@GetMapping("Join/user_login")
 	public String userLogin() {
