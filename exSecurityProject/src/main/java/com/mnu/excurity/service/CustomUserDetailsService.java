@@ -5,8 +5,10 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.mnu.excurity.dto.UserRequestDTO;
+import com.mnu.excurity.dto.UserResponseDTO;
 import com.mnu.excurity.entity.UserEntity;
 import com.mnu.excurity.repository.UserRepository;
 
@@ -14,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service   // ⭐⭐⭐ 필수 (없으면 절대 호출 안 됨)
 @RequiredArgsConstructor
+@Transactional
 public class CustomUserDetailsService implements UserDetailsService {
 
     private final UserRepository userRepository;
@@ -57,15 +60,34 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String userid)
             throws UsernameNotFoundException {
-
         System.out.println("CustomUserDetailsService 호출됨: " + userid);
-
         UserEntity user = userRepository.findByUserid(userid)
                 .orElseThrow(() ->
                         new UsernameNotFoundException("사용자 없음: " + userid));
-
         return new CustomUserDetails(user);
     }
     
+    //특정(idx) 검색(modify) : 수정폼에서 사용
+    public UserResponseDTO userSearch(String userid){
+         UserEntity userEntity = userRepository.findByUserid(userid)
+        		 .orElseThrow(() -> new IllegalArgumentException("아이디 없음"));
+         UserResponseDTO dto = new UserResponseDTO(userEntity);
+         return dto;
+    }
     
+    //회원정보수정 메소드
+    public void updateUser(String userid, UserRequestDTO userRequestDTO) {
+		//비번암호화
+    	userRequestDTO.setPasswd(encoder.encode(userRequestDTO.getPasswd()));
+        UserEntity user = userRepository.findByUserid(userid)
+                .orElseThrow(() -> new IllegalArgumentException("사용자 없음"));
+
+        // 엔티티 값 변경 (Dirty Checking)
+        user.update(
+        		userRequestDTO.getName(),
+        		userRequestDTO.getPasswd(),
+        		userRequestDTO.getTel(),
+        		userRequestDTO.getEmail()
+        );
+    }
 }

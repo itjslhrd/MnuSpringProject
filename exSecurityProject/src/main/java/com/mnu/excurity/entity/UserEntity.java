@@ -47,4 +47,11 @@ public class UserEntity {
          this.role=Role.USER;//기본값으로 User 권한 부여
     }
 
+    //회원정보수정용
+    public void update(String name, String passwd, String tel, String email) {
+        this.name = name;
+        this.passwd = passwd;
+        this.tel = tel;
+        this.email = email;
+    }
 }

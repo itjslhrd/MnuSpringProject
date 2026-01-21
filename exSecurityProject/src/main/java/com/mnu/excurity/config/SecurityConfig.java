@@ -32,7 +32,12 @@ public class SecurityConfig {
                     //ADMIN을 가진 사용자만 /Admin 로 시작하는 경로 접근 허용
                 .anyRequest().permitAll()//다른 요청
                )
-        	.userDetailsService(customUserDetailsService) 
+        	.userDetailsService(customUserDetailsService) //서비스 사용
+        	//회원가입 POST를 CSRF 검사에서 제외
+        	//회원가입 / 로그인 / 비밀번호찾기는 비로그인 사용자 공개 기능 → CSRF 제외 가능
+        	.csrf(csrf->csrf
+        			.ignoringRequestMatchers("/Join/user_insert")
+        	)
           .formLogin(login->login
         		.loginPage("/Join/user_login")
                	.loginProcessingUrl("/Join/user_login") //login에 접속하면 시큐리티가 낚아채서 login 진행
@@ -52,18 +57,5 @@ public class SecurityConfig {
 
 		return http.build();
 	}
-	
 
-	//비번 암호화
-   @Bean
-   public BCryptPasswordEncoder bCryptPasswordEncoder() {
-        return new BCryptPasswordEncoder();
-   }
-/*
-   //비번암호화
-   @Bean
-   public PasswordEncoder passwordEncoder() {
-      return new BCryptPasswordEncoder(); 
-   }
-*/
 }
